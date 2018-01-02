@@ -1,0 +1,58 @@
+-- load the library (?)
+import Sound.Tidal.MIDI.Context
+
+-- show us available midi devices
+displayOutputDevices >>= putStrLn
+
+-- connect
+devices <- midiDevices
+
+m1 <- midiStream devices "MIDI in" 3 synthController --mission control
+
+m1 <- midiStream devices "IAC Driver Bus 1" 1 synthController --mission control
+
+m2 <- midiStream devices "IAC Driver Bus 1" 1 synthController
+
+m3 <- midiStream devices "IAC Driver Bus 1" 1 synthController
+
+m4 <- midiStream devices "IAC Driver Bus 1" 1 synthController
+
+--m4 <- midiStream devices "IAC Driver Bus 1" 1 synthController
+
+silence
+
+m1 silence
+
+m2 silence
+
+m3 silence
+
+bps (120/60)
+
+
+-- bass drum
+m1 $  8 7 (fast 2) $ degradeBy "0.6" $ midinote "[0]*8"
+
+m1 $ midinote "[0 ~ 0 ~, ~ 2]"
+
+m2 $ midinote "[1*8]"
+
+m1 $ silence
+
+m2 $ silence
+
+
+m1 $ whenmod 4 3 (0.25 <~ ) $ sometimes (stut 4 1 (choose [0.5, 0.25, 1])) $ midinote "[0, 1*2, [~ 2*1]]"
+
+m1 $ midinote "[0]"
+
+-- bd
+m4 $ midinote "[0]"
+
+m4 silence
+
+m3 $ silence
+
+-- clock= 15, reset = 14
+m2 $ midinote "[15*8,14/2]"
+

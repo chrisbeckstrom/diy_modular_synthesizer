@@ -10,6 +10,12 @@
 // midi white key notes from C1 to A1 trigger the top row of pins on the arduino
 // I use this for gate/trigger voltages to control the modular and sync to bitwig, etc.
 
+// requirements:
+// Mozzi Arduino library
+// <https://sensorium.github.io/Mozzi/>
+
+
+// SETUP ------------------------------------------------
 MIDI_CREATE_DEFAULT_INSTANCE();
 
 #include <MozziGuts.h> // 3rd party MIDI library
@@ -58,6 +64,8 @@ int pinA5midi = 0;
 // see documentation here:
 // http://arduinomidilib.fortyseveneffects.com/a00022.html
 
+
+// NOTE ON ----------------------------------------
 void handleNoteOn(byte channel, byte pitch, byte velocity)
 {
     // Do whatever you want when a note is pressed.
@@ -97,6 +105,8 @@ void handleNoteOn(byte channel, byte pitch, byte velocity)
 
 }
 
+
+// NOTE OFF -----------------------------------
 void handleNoteOff(byte channel, byte pitch, byte velocity)
 {
     // Do something when the note is released.
@@ -129,6 +139,8 @@ void handleNoteOff(byte channel, byte pitch, byte velocity)
 
 // -----------------------------------------------------------------------------
 
+// **TODO** this is probably where I can add MIDI cc -> pwm functionality
+
 void setup()
 {
     // Connect the handleNoteOn function to the library, 
@@ -150,7 +162,7 @@ void setup()
     pinMode(pin13, OUTPUT);
 
     // MIDDLE ROW - PWM pins
-    pinMode(pin3, INPUT);
+    pinMode(pin3, OUTPUT);
     pinMode(pin5, OUTPUT);
     pinMode(pin6, OUTPUT);
     pinMode(pin9, OUTPUT);
@@ -171,6 +183,10 @@ void setup()
 }
 
 //  Send a three byte midi message  
+//  I think this sends a midi message back into the computer
+//  this isn't very useful, maybe I should turn this offr
+//  or keep it around for sending midi from the modular to the computer
+
 void midiSend(char status, char data1, char data2) {
   Serial.print(status);
   Serial.print(data1);
@@ -190,6 +206,8 @@ void loop()
     // I should really figure out how to do a function here
     // until then, I'll just copy-paste like a hack :-)
 
+    // I did this to experiment with sending voltages to arduino and converting to midi cc
+    // may need to deactivate for now
     pinA0val = analogRead(pinA0);   // read the input pin
     pinA0midi = map(pinA0val, 0, 1023, 0, 127);
     // format:
