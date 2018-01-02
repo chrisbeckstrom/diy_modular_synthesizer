@@ -1,9 +1,16 @@
 #include <MIDI.h>
 
 // this is the code for the MISSION CONTROL module
+// the idea: hook up all the pins of an arduino to a panel
+// connect the arduino to my computer using a USB cable
+// send midi from my computer to the arduino via serial messages
+// using the ttymidi (linux) or hairless midi bridge (mac)
+
+// in practice (as of January 2018):
+// midi white key notes from C1 to A1 trigger the top row of pins on the arduino
+// I use this for gate/trigger voltages to control the modular and sync to bitwig, etc.
 
 MIDI_CREATE_DEFAULT_INSTANCE();
-
 
 #include <MozziGuts.h> // 3rd party MIDI library
 
@@ -46,7 +53,6 @@ int pinA5val = 0;
 int pinA5midi = 0;
 
 // -----------------------------------------------------------------------------
-
 // This function will be automatically called when a NoteOn is received.
 // It must be a void-returning function with the correct parameters,
 // see documentation here:
