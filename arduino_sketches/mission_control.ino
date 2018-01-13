@@ -1,5 +1,3 @@
-#include <MIDI.h>
-
 // this is the code for the MISSION CONTROL module
 // the idea: hook up all the pins of an arduino to a panel
 // connect the arduino to my computer using a USB cable
@@ -18,6 +16,7 @@
 // SETUP ------------------------------------------------
 MIDI_CREATE_DEFAULT_INSTANCE();
 
+#include <MIDI.h>
 #include <MozziGuts.h> // 3rd party MIDI library
 
 // digital pins
