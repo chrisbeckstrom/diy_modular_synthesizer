@@ -1,0 +1,155 @@
+#N canvas 437 23 1168 784 10;
+#X obj 156 163 unpackOSC;
+#X obj 155 90 packOSC;
+#X obj 156 134 o.io.slipserial;
+#X obj -40 118 print;
+#X text -60 135 serial data sent and received here;
+#X obj -40 -96 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X text 528 75 hit this to open the connection;
+#X obj 35 421 route /a0;
+#X obj 522 -9 loadbang;
+#X obj 520 21 del 500;
+#X obj 38 461 vsl 15 128 0 1023 0 0 empty empty empty 0 -9 0 10 -262144
+-1 -1 12700 1;
+#X obj 154 190 s osc;
+#X obj 37 396 r osc;
+#X floatatom 61 459 5 0 0 0 - - -, f 5;
+#X obj 109 461 vsl 15 128 0 1023 0 0 empty empty empty 0 -9 0 10 -262144
+-1 -1 12700 1;
+#X obj 108 396 r osc;
+#X floatatom 132 459 5 0 0 0 - - -, f 5;
+#X obj 106 421 route /a1;
+#X obj 182 460 vsl 15 128 0 1023 0 0 empty empty empty 0 -9 0 10 -262144
+-1 -1 12700 1;
+#X obj 181 396 r osc;
+#X floatatom 205 458 5 0 0 0 - - -, f 5;
+#X obj 179 420 route /a2;
+#X obj 257 460 vsl 15 128 0 1023 0 0 empty empty empty 0 -9 0 10 -262144
+-1 -1 12700 1;
+#X obj 256 396 r osc;
+#X floatatom 280 458 5 0 0 0 - - -, f 5;
+#X obj 328 460 vsl 15 128 0 1023 0 0 empty empty empty 0 -9 0 10 -262144
+-1 -1 12700 1;
+#X obj 327 396 r osc;
+#X floatatom 351 458 5 0 0 0 - - -, f 5;
+#X obj 401 459 vsl 15 128 0 1023 0 0 empty empty empty 0 -9 0 10 -262144
+-1 -1 12626 1;
+#X obj 400 396 r osc;
+#X floatatom 424 457 5 0 0 0 - - -, f 5;
+#X obj 254 420 route /a3;
+#X obj 325 420 route /a4;
+#X obj 398 419 route /a5;
+#X text 34 372 # ANALOG INPUTS;
+#X obj 308 -66 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+1;
+#N canvas 0 22 767 851 link 1;
+#X msg 310 67 tempo \$1;
+#X msg 99 68 resolution \$1;
+#X msg 202 88 reset \$1 \$2;
+#X obj 202 67 pack f f;
+#X floatatom 209 186 5 0 0 1 beat_time - -, f 5;
+#X floatatom 172 204 5 0 0 1 phase - -, f 5;
+#X msg 31 177 \; pd dsp 1;
+#X floatatom 135 226 5 0 0 1 step - -, f 5;
+#X floatatom 246 165 5 0 0 1 tempo - -, f 5;
+#X obj 22 48 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1 1
+;
+#X obj 135 140 abl_link~ 1 0 4 134;
+#X floatatom 310 48 5 0 0 2 tempo - -, f 5;
+#X floatatom 247 48 5 0 0 2 quantum - -, f 5;
+#X floatatom 202 48 5 0 0 2 beat - -, f 5;
+#X floatatom 99 48 5 0 0 2 resolution - -, f 5;
+#X msg 22 68 connect \$1;
+#X floatatom 422 190 5 0 0 0 - - -, f 5;
+#X obj 422 168 r #abl_link_num_peers;
+#X obj 82 276 s link_step;
+#X obj 213 251 sel 0;
+#X obj 210 280 s link_reset;
+#X obj 77 -19 loadbang;
+#X msg 86 11 2;
+#X connect 0 0 10 0;
+#X connect 1 0 10 0;
+#X connect 2 0 10 0;
+#X connect 3 0 2 0;
+#X connect 9 0 15 0;
+#X connect 10 0 7 0;
+#X connect 10 0 18 0;
+#X connect 10 0 19 0;
+#X connect 10 1 5 0;
+#X connect 10 2 4 0;
+#X connect 10 3 8 0;
+#X connect 11 0 0 0;
+#X connect 12 0 3 1;
+#X connect 13 0 3 0;
+#X connect 14 0 1 0;
+#X connect 15 0 10 0;
+#X connect 17 0 16 0;
+#X connect 19 0 20 0;
+#X connect 21 0 9 0;
+#X connect 21 0 22 0;
+#X connect 22 0 14 0;
+#X restore 760 -86 pd link;
+#X obj 181 -130 r link_step;
+#X msg 171 -51 /led 1;
+#X msg 211 32 /led 0;
+#X obj 230 -28 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X msg -10 -52 /led 1;
+#X msg -1 52 /led 0;
+#X obj -34 -8 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
+-1;
+#X obj -18 25 del 500;
+#X obj -14 -83 metro 1600;
+#X obj 640 229 r link_step;
+#X floatatom 681 258 5 0 0 0 - - -, f 5;
+#X obj 745 227 r link_reset;
+#X obj 751 259 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X obj 135 -122 bng 15 50 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X msg 527 91 devicename /dev/cu.usbmodemFA131 \, baud 115200 \, pollintervall
+4 \, verbose 1;
+#X obj 238 4 del 50;
+#X obj 216 -80 metro 170;
+#X connect 0 0 11 0;
+#X connect 1 0 2 0;
+#X connect 2 0 0 0;
+#X connect 5 0 45 0;
+#X connect 7 0 10 0;
+#X connect 7 0 13 0;
+#X connect 8 0 9 0;
+#X connect 9 0 51 0;
+#X connect 12 0 7 0;
+#X connect 15 0 17 0;
+#X connect 17 0 14 0;
+#X connect 17 0 16 0;
+#X connect 19 0 21 0;
+#X connect 21 0 18 0;
+#X connect 21 0 20 0;
+#X connect 23 0 31 0;
+#X connect 26 0 32 0;
+#X connect 29 0 33 0;
+#X connect 31 0 22 0;
+#X connect 31 0 24 0;
+#X connect 32 0 25 0;
+#X connect 32 0 27 0;
+#X connect 33 0 28 0;
+#X connect 33 0 30 0;
+#X connect 35 0 53 0;
+#X connect 37 0 50 0;
+#X connect 38 0 1 0;
+#X connect 38 0 40 0;
+#X connect 39 0 1 0;
+#X connect 40 0 52 0;
+#X connect 41 0 43 0;
+#X connect 41 0 1 0;
+#X connect 42 0 1 0;
+#X connect 43 0 44 0;
+#X connect 44 0 42 0;
+#X connect 45 0 41 0;
+#X connect 46 0 47 0;
+#X connect 48 0 49 0;
+#X connect 51 0 2 1;
+#X connect 52 0 39 0;
+#X connect 53 0 38 0;

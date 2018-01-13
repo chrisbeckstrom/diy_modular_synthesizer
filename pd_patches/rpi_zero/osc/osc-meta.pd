@@ -1,0 +1,8 @@
+#N canvas 18 240 200 200 10;
+#N canvas 100 78 356 167 META 0;
+#X text 10 52 VERSION 0.2;
+#X text 9 77 AUTHOR Martin Peach;
+#X text 11 10 NAME osc;
+#X text 9 102 LICENSE GNU GPL v2+;
+#X text 10 30 DESCRIPTION classes for dealing with OSC messages;
+#X restore 10 10 pd META;

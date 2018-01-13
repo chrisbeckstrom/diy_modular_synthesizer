@@ -1,0 +1,40 @@
+#N canvas 437 23 1168 784 10;
+#X obj 294 176 unpackOSC;
+#X obj 163 55 packOSC;
+#X obj 156 134 o.io.slipserial;
+#X obj 136 189 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X obj 242 366 print;
+#X obj -40 118 print;
+#X obj 247 327 route /helloFromArduino;
+#X msg 527 91 devicename /dev/cu.usbmodemFA131 \, baud 57600 \, pollintervall
+4 \, verbose 1;
+#X msg 377 36 disconnect;
+#X text -60 135 serial data sent and received here;
+#X msg -10 -52 /led 1;
+#X msg -1 52 /led 0;
+#X obj -34 -8 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
+-1;
+#X obj -18 25 del 2;
+#X obj -40 -96 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X obj -14 -82 metro 1200;
+#X text 528 75 hit this to open the connection;
+#X obj 559 395 osc~ 440;
+#X obj 542 444 dac~;
+#X obj 600 356 mtof;
+#X connect 0 0 6 0;
+#X connect 1 0 2 0;
+#X connect 2 0 0 0;
+#X connect 6 0 4 0;
+#X connect 6 0 17 0;
+#X connect 7 0 2 1;
+#X connect 8 0 2 0;
+#X connect 10 0 1 0;
+#X connect 10 0 12 0;
+#X connect 11 0 1 0;
+#X connect 12 0 13 0;
+#X connect 13 0 11 0;
+#X connect 14 0 15 0;
+#X connect 15 0 10 0;
+#X connect 17 0 18 0;
