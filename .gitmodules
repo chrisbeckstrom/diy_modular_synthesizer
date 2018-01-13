@@ -1,0 +1,3 @@
+[submodule "pd_patches/pd_modular_synth"]
+	path = pd_patches/pd_modular_synth
+	url = https://github.com/chrisbeckstrom/pd_modular_synth
