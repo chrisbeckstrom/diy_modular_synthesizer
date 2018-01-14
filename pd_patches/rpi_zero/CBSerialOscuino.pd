@@ -1,4 +1,4 @@
-#N canvas 0 23 1168 784 10;
+#N canvas 0 23 753 851 10;
 #X obj 156 163 unpackOSC;
 #X obj 155 90 packOSC;
 #X obj 156 134 o.io.slipserial;
@@ -125,6 +125,10 @@
 1;
 #X obj 687 533 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
+#X obj 597 574 wiringPi pin 23 output;
+#X obj 622 605 wiringPi pin 18 output;
+#X obj 658 636 wiringPi pin 15 output;
+#X obj 696 670 wiringPi pin 14 output;
 #X connect 0 0 11 0;
 #X connect 1 0 2 0;
 #X connect 2 0 0 0;
