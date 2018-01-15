@@ -1,0 +1,36 @@
+#N canvas 466 69 879 559 10;
+#X obj 213 121 o.io.slipserial;
+#X text 528 75 hit this to open the connection;
+#X obj 524 11 loadbang;
+#X obj 522 41 del 500;
+#X obj 308 -66 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X obj 160 -118 r link_step;
+#X msg 171 -51 /led 1;
+#X msg 211 32 /led 0;
+#X obj 265 -28 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X obj 912 -112 pdwiringPi/pdwiringPi/wiringPi;
+#X text 894 -127 load stuff;
+#X obj 885 -83 pd-mrpeach/osc/unpackOSC;
+#X obj 944 -60 pd-mrpeach/osc/packOSC;
+#X obj 155 90 packOSC;
+#X obj 924 -25 comport-0.2/comport;
+#X obj 272 -121 loadbang;
+#X obj 216 -80 metro 120;
+#N canvas 723 51 450 300 clock 0;
+#X restore 469 -2 pd clock;
+#X msg 527 91 devicename /dev/ttyACM0 \, baud 115200 \, pollintervall
+4 \, verbose 1;
+#X obj 238 4 del 100;
+#X connect 2 0 3 0;
+#X connect 3 0 18 0;
+#X connect 4 0 16 0;
+#X connect 6 0 13 0;
+#X connect 6 0 8 0;
+#X connect 7 0 13 0;
+#X connect 8 0 19 0;
+#X connect 13 0 0 0;
+#X connect 16 0 6 0;
+#X connect 18 0 0 1;
+#X connect 19 0 7 0;

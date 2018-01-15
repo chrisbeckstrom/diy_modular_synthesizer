@@ -1,52 +1,32 @@
-#N canvas 192 23 753 851 10;
-#X obj 156 163 unpackOSC;
-#X obj 155 90 packOSC;
-#X obj 156 134 o.io.slipserial;
+#N canvas 67 51 1367 827 10;
+#X obj 213 121 o.io.slipserial;
 #X obj -40 118 print;
 #X text -60 135 serial data sent and received here;
 #X obj -40 -96 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
 #X text 528 75 hit this to open the connection;
 #X obj -36 326 route /a0;
-#X obj 522 -9 loadbang;
-#X obj 520 21 del 500;
-#X obj -33 366 vsl 15 128 0 1023 0 0 empty empty empty 0 -9 0 10 -262144
--1 -1 0 1;
+#X obj 524 11 loadbang;
+#X obj 522 41 del 500;
 #X obj 154 190 s osc;
 #X obj -34 301 r osc;
-#X floatatom -10 364 5 0 0 0 - - -, f 5;
-#X obj 38 366 vsl 15 128 0 1023 0 0 empty empty empty 0 -9 0 10 -262144
--1 -1 0 1;
 #X obj 37 301 r osc;
-#X floatatom 61 364 5 0 0 0 - - -, f 5;
 #X obj 35 326 route /a1;
-#X obj 111 365 vsl 15 128 0 1023 0 0 empty empty empty 0 -9 0 10 -262144
--1 -1 0 1;
 #X obj 110 301 r osc;
-#X floatatom 134 363 5 0 0 0 - - -, f 5;
 #X obj 108 325 route /a2;
-#X obj 186 365 vsl 15 128 0 1023 0 0 empty empty empty 0 -9 0 10 -262144
--1 -1 0 1;
 #X obj 185 301 r osc;
-#X floatatom 209 363 5 0 0 0 - - -, f 5;
-#X obj 257 365 vsl 15 128 0 1023 0 0 empty empty empty 0 -9 0 10 -262144
--1 -1 0 1;
 #X obj 256 301 r osc;
-#X floatatom 280 363 5 0 0 0 - - -, f 5;
-#X obj 330 364 vsl 15 128 0 1023 0 0 empty empty empty 0 -9 0 10 -262144
--1 -1 0 1;
 #X obj 329 301 r osc;
-#X floatatom 353 362 5 0 0 0 - - -, f 5;
 #X obj 183 325 route /a3;
 #X obj 254 325 route /a4;
 #X obj 327 324 route /a5;
 #X text -37 277 # ANALOG INPUTS;
 #X obj 308 -66 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
-#X obj 181 -130 r link_step;
+#X obj 160 -118 r link_step;
 #X msg 171 -51 /led 1;
 #X msg 211 32 /led 0;
-#X obj 230 -28 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+#X obj 265 -28 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
 -1 -1;
 #X msg -10 -52 /led 1;
 #X msg -1 52 /led 0;
@@ -54,77 +34,134 @@
 -1;
 #X obj -18 25 del 500;
 #X obj -14 -83 metro 1600;
-#X obj 710 208 r link_step;
-#X floatatom 751 237 5 0 0 0 - - -, f 5;
-#X obj 815 206 r link_reset;
-#X obj 821 238 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+#X obj 496 382 r link_step;
+#X floatatom 569 411 5 0 0 0 - - -, f 5;
+#X obj 601 380 r link_reset;
+#X obj 607 412 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
 -1 -1;
-#X obj 135 -122 bng 15 50 50 0 empty empty empty 17 7 0 10 -262144
--1 -1;
-#X msg 527 91 devicename /dev/cu.usbmodemFA131 \, baud 115200 \, pollintervall
-4 \, verbose 1;
 #X obj 238 4 del 50;
-#X obj 216 -80 metro 170;
-#X obj 958 303 ../pd_modular_synth/vco2;
+#X obj 1124 236 ../pd_modular_synth/vco2;
 #X obj 998 560 dac~;
-#X obj 389 196 unpackOSC;
 #X obj 595 503 dec_to_binary;
 #X floatatom 591 461 5 0 15 0 - - -, f 5;
-#X obj 595 533 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 595 533 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 625 533 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
-#X obj 658 533 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 658 533 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 687 533 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
+#X obj 912 -112 pdwiringPi/pdwiringPi/wiringPi;
+#X obj 775 456 wiringPi;
 #X obj 597 574 wiringPi pin 23 output;
 #X obj 622 605 wiringPi pin 18 output;
 #X obj 658 636 wiringPi pin 15 output;
 #X obj 696 670 wiringPi pin 14 output;
-#X connect 0 0 11 0;
-#X connect 1 0 2 0;
-#X connect 2 0 0 0;
-#X connect 5 0 44 0;
-#X connect 7 0 10 0;
-#X connect 7 0 13 0;
-#X connect 8 0 9 0;
-#X connect 9 0 50 0;
-#X connect 12 0 7 0;
-#X connect 15 0 17 0;
-#X connect 17 0 14 0;
+#X obj 409 674 wiringPi pin 14 output;
+#X msg 469 589 1;
+#X msg 388 632 0;
+#X msg 662 443 1;
+#X msg 709 455 6;
+#X text 894 -127 load stuff;
+#X obj 885 -83 pd-mrpeach/osc/unpackOSC;
+#X obj 944 -60 pd-mrpeach/osc/packOSC;
+#X obj 155 90 packOSC;
+#X obj 924 -25 comport-0.2/comport;
+#X obj 156 163 pd-mrpeach/osc/unpackOSC;
+#X msg 539 149 devicename /dev/ttyACM0 \, baud 115200 \, pollintervall
+;
+#X obj 57 630 abl_link/external/abl_link~;
+#N canvas 391 51 1019 757 link 0;
+#X msg 365 141 tempo \$1;
+#X msg 154 142 resolution \$1;
+#X msg 257 162 reset \$1 \$2;
+#X obj 257 141 pack f f;
+#X floatatom 264 260 5 0 0 1 beat_time - -, f 5;
+#X floatatom 227 278 5 0 0 1 phase - -, f 5;
+#X msg 21 185 \; pd dsp 1;
+#X floatatom 190 300 5 0 0 1 step - -, f 5;
+#X floatatom 301 239 5 0 0 1 tempo - -, f 5;
+#X obj 77 122 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+1;
+#X obj 190 214 abl_link~ 1 0 4 134;
+#X floatatom 365 122 5 0 0 2 tempo - -, f 5;
+#X floatatom 302 122 5 0 0 2 quantum - -, f 5;
+#X floatatom 257 122 5 0 0 2 beat - -, f 5;
+#X floatatom 154 122 5 0 0 2 resolution - -, f 5;
+#X msg 77 142 connect \$1;
+#X floatatom 370 205 5 0 0 0 - - -, f 5;
+#X obj 370 183 r #abl_link_num_peers;
+#X obj 71 12 loadbang;
+#X obj 72 36 delay 1000;
+#X msg 137 76 4;
+#X obj 152 323 s link_step;
+#X connect 0 0 10 0;
+#X connect 1 0 10 0;
+#X connect 2 0 10 0;
+#X connect 3 0 2 0;
+#X connect 9 0 15 0;
+#X connect 10 0 7 0;
+#X connect 10 0 21 0;
+#X connect 10 1 5 0;
+#X connect 10 2 4 0;
+#X connect 10 3 8 0;
+#X connect 11 0 0 0;
+#X connect 12 0 3 1;
+#X connect 13 0 3 0;
+#X connect 14 0 1 0;
+#X connect 15 0 10 0;
 #X connect 17 0 16 0;
-#X connect 19 0 21 0;
-#X connect 21 0 18 0;
-#X connect 21 0 20 0;
-#X connect 23 0 31 0;
-#X connect 26 0 32 0;
-#X connect 29 0 33 0;
-#X connect 31 0 22 0;
-#X connect 31 0 24 0;
-#X connect 32 0 25 0;
-#X connect 32 0 27 0;
-#X connect 33 0 28 0;
-#X connect 33 0 30 0;
-#X connect 35 0 52 0;
-#X connect 36 0 49 0;
-#X connect 37 0 1 0;
-#X connect 37 0 39 0;
-#X connect 38 0 1 0;
-#X connect 39 0 51 0;
-#X connect 40 0 42 0;
-#X connect 40 0 1 0;
-#X connect 41 0 1 0;
-#X connect 42 0 43 0;
-#X connect 43 0 41 0;
-#X connect 44 0 40 0;
-#X connect 45 0 46 0;
-#X connect 47 0 48 0;
-#X connect 50 0 2 1;
-#X connect 51 0 38 0;
-#X connect 52 0 37 0;
-#X connect 56 0 58 0;
-#X connect 56 1 59 0;
-#X connect 56 2 60 0;
-#X connect 56 3 61 0;
-#X connect 57 0 56 0;
+#X connect 18 0 19 0;
+#X connect 19 0 9 0;
+#X connect 19 0 20 0;
+#X connect 19 0 6 0;
+#X connect 20 0 14 0;
+#X restore 577 308 pd link;
+#X obj 272 -121 loadbang;
+#X obj 216 -80 metro 120;
+#N canvas 723 51 450 300 clock 0;
+#X restore 469 -2 pd clock;
+#X msg 527 91 devicename /dev/ttyACM0 \, baud 115200 \, pollintervall
+4 \, verbose 1;
+#X connect 0 0 60 0;
+#X connect 3 0 30 0;
+#X connect 6 0 7 0;
+#X connect 7 0 67 0;
+#X connect 9 0 5 0;
+#X connect 10 0 11 0;
+#X connect 12 0 13 0;
+#X connect 14 0 17 0;
+#X connect 15 0 18 0;
+#X connect 16 0 19 0;
+#X connect 21 0 65 0;
+#X connect 23 0 58 0;
+#X connect 23 0 25 0;
+#X connect 24 0 58 0;
+#X connect 25 0 35 0;
+#X connect 26 0 28 0;
+#X connect 26 0 58 0;
+#X connect 27 0 58 0;
+#X connect 28 0 29 0;
+#X connect 29 0 27 0;
+#X connect 30 0 26 0;
+#X connect 31 0 39 0;
+#X connect 33 0 34 0;
+#X connect 35 0 24 0;
+#X connect 38 0 40 0;
+#X connect 38 1 41 0;
+#X connect 38 2 42 0;
+#X connect 38 3 43 0;
+#X connect 39 0 38 0;
+#X connect 40 0 46 0;
+#X connect 41 0 47 0;
+#X connect 42 0 48 0;
+#X connect 43 0 49 0;
+#X connect 51 0 50 0;
+#X connect 52 0 50 0;
+#X connect 53 0 38 0;
+#X connect 54 0 38 0;
+#X connect 58 0 0 0;
+#X connect 60 0 8 0;
+#X connect 65 0 23 0;
+#X connect 67 0 0 1;
