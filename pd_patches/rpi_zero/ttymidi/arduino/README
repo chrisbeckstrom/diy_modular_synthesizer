@@ -1,0 +1,25 @@
+NOTE that ardumidi library is becoming obsolete, but will still be present
+in our distribution package as an example how to communicate with ttymidi at
+computer end. For those of you who are not interested in such an excursion,
+we advice downloading Arduino MIDI library, which is now (almost (read further))
+compatible with ttymidi:
+
+http://www.arduino.cc/playground/Main/MIDILibrary
+
+When using MIDI library, please check our example patch as there is one small
+detail that you have to remember when using MIDI library together with
+ttymidi (you have to call Serial.begin(115200) after MIDI.begin(int) command.
+You can copy the example patch demonstrating this like so:
+
+cp -r MIDI /path/to/arduino/sketchbook/libraries/
+
+You should install MIDILibrary before doing this. Example patch will appear
+to examples dialog of Arduino IDE.
+
+If you still want to install the Arduino ttymidi library (which I so aptly
+named "ardumidi"), just copy the ttymidi folder into the Arduino libraries folder:
+
+cp -r ardumidi /path/to/arduino/sketchbook/libraries/
+
+This library comes with example sketches. Please take
+a look at them, as they contains information on how to use the library.

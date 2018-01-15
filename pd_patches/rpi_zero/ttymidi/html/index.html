@@ -1,0 +1,490 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>ttymidi</title>
+	<link rel="stylesheet" type="text/css" href="main.css" />
+</head>
+
+<body>
+
+<div class="mainwrapper">
+	<div class="title">
+		<h1>ttymidi</h1>
+		<div class="caption">MIDI for your serial devices</div>
+	</div>
+
+	<img src="diagram.png" />
+
+	<h2>In a nutshell</h2>
+	<div class="sectiontext">
+
+		<p>
+		<strong>ttymidi</strong> is a GPL-licensed program that allows external 
+		serial devices to interface with ALSA MIDI applications.
+		The main motivation behind <strong>ttymidi</strong> was to make 
+		<a href="http://www.arduino.cc">Arduino</a> boards talk to MIDI applications
+		without the need to use (<a href="http://itp.nyu.edu/physcomp/Labs/MIDIOutput">or build</a>)
+		any extra hardware.
+		</p>
+
+	</div>
+
+	<h2>Usage</h2>
+	<div class="sectiontext">
+		<p>
+		If you are using an Arduino board, simplest will be to use
+		<a href="http://www.arduino.cc/playground/Main/MIDILibrary">
+                Arduino MIDI library</a>, as described in the following sections.
+                You may also use less sophisticated ardumidi library that is provided
+                with ttymidi download package. If you are
+		using another device, you should read the rest of this page to see how
+		your device should communicate. Once your device is programmed and
+		connected to your PC, <strong>ttymidi</strong> is executed in the
+		following manner:</p>
+		
+<!--		If are using an Arduino board, you must first program it with the
+		provided MIDI library, as described in the next section. If you are
+		using another device, you should read the rest of this page to see how
+		your device should communicate. Once your device is programmed and
+		connected to your PC, <strong>ttymidi</strong> is executed in the
+		following manner: -->
+		</p>
+
+		<p>
+		<pre>ttymidi -s /dev/ttyS0 -b 9600</pre>
+		</p>
+
+		<p>
+		Where <code>/dev/ttyS0</code> is the serial port you want to read from,
+		and <code>9600</code> is the bitrate. For Arduino with serial connection
+                runnning at 115200bps (the default rate for <strong>ttymidi</strong>)
+                the command would be:
+		</p>
+
+		<p>
+		Arduino Diecimila:
+		<pre>ttymidi -s /dev/ttyUSB0 -v</pre>
+		</p>
+		<p>Arduino UNO:
+		<pre>ttymidi -s /dev/ttyACM0 -v</pre>
+		</p>
+
+		<p>
+		Where the <code>-v</code> gives me <em>verbose output</em>, which helps
+		me when I'm debugging.
+		</p>
+
+		<p>
+		<strong>ttymidi</strong> creates an ALSA MIDI input and output ports that can be 
+		interfaced to any compatible program. This is done in the following manner:
+		</p>
+
+		<p>
+		<pre>
+# start ttymidi
+ttymidi -s /dev/ttyUSB0 &
+
+# start some ALSA compatible MIDI 
+# program (timidity, in this case)
+timidity -iA &                    
+
+# list available MIDI input clients
+aconnect -i                       
+
+# list available MIDI output clients
+aconnect -o                       
+
+# connect
+aconnect 128:0 129:0
+
+# ...where 128 and 129 are the client 
+# numbers for ttymidi and timidity,
+# found with the commands above</pre>
+		</p>
+
+		<p>
+		If you would like to use a graphical interface to connect your MIDI 
+		clients, you can use something like 
+		<a href="http://qjackctl.sourceforge.net" />qjackctl</a>. As for
+		the program that will consume the MIDI data, there are many out there 
+		(other than <a href="http://timidity.sourceforge.net">timidity</a>, which
+		was used in the previous example). Some crowd pleasers are
+		<a href="http://fluidsynth.resonance.org/">fluidsynth</a>,
+		<a href="http://www.puredata.org/">puredata</a>, 
+		<a href="http://www.essej.net/sooperlooper">sooperlooper</a>
+		and <a href="http://www.ardour.org">ardour</a>, 
+		to cite a few.
+		</p>
+
+		<p>If you are using automated patchbay connecting application, such as
+		the patchbay feature of qjackctl or <a href="http://sourceforge.net/projects/aj-snapshot/">
+		aj-snapshot</a> you might want to rename the name of ttymidi client created by using
+		<code>-n</code> flag.</p>
+		<p><pre>ttymidi -s /dev/ttyUSB0 -v -n my_weird_controller</pre></p>
+			
+	</div>
+	
+
+	<h2>Programming your serial device</h2>
+	<h3>Arduino MIDI library</h3>
+	<div class="sectiontext">
+		<p>ttymidi is nowadays compatible with
+                <a href="http://www.arduino.cc/playground/Main/MIDILibrary">Arduino MIDI library</a>
+		and we strongly recommend using it when communicating from Arduino to ttymidi.
+		You only need to remember to call <code>Serial.begin(int baud_rate)</code>
+		immediately after <code>MIDI.begin(int channel)</code> on your patch as
+		the serial port of your computer is not able to operate at MIDI baud rate
+		that MIDI library is using. For example:</p>
+		<p><pre>
+void setup() {
+  MIDI.begin(4);        // will listen incoming MIDI at channel 4
+  Serial.begin(115200); // will change baud rate of MIDI traffic from 31250 to 115200
+}
+</pre></p>		
+		<p>You'll find MIDI library examples with these changes made in ttymidi
+                download package.</p>
+</div>
+<h3>Arduino interface</h3>
+<div class="sectiontext">
+		<p>This chapter explains how to use deprecated (but still functional)
+                ardumidi library instead of Arduino MIDI library. To interface to
+                <strong>ttymidi</strong>, the serial-attached device must
+		send data in MIDI-format. 
+		In the case of Arduino boards, a library is provided that abstracts all
+		the nitty-gritty details away. Below is a list of the available 
+		functions:
+		</p>
+
+		<p>
+		<pre>
+// Start/stop playing a certain note:
+midi_note_on(byte channel, byte key, byte velocity);
+midi_note_off(byte channel, byte key, byte velocity);
+
+// Change pressure of specific keys:
+midi_key_pressure(byte channel, byte key, byte value);
+
+// Change controller value (used for knobs, etc):
+midi_controller_change(byte channel, byte controller, byte value);
+
+// Change "program" (change the instrument):
+midi_program_change(byte channel, byte program);
+
+// Change key pressure of entire channels:
+midi_channel_pressure(byte channel, byte value);
+
+// Change pitch-bend wheel:
+midi_pitch_bend(byte channel, int value);
+
+// Check if a MIDI message has arrived from the PC
+int midi_message_available();
+
+// Get a MIDI message from the PC
+MidiMessage read_midi_message();
+
+// Get the pitch bend value from a MIDI message
+int get_pitch_bend(MidiMessage msg);
+
+// Send a comment:
+midi_comment(char* str);
+
+// Send a series of bytes (to be interpreted by another program):
+midi_printbytes(char* bytes, int len);</pre>
+		</p>
+
+		<p>
+		Where the parameters are in the range: channel (0&ndash;15), 
+		pitch-bend value (0&ndash;16383), all other values (0&ndash;127).
+        The center position of the pitch-bend wheel is 8192.
+		</p>
+
+		<p>
+		Since MIDI uses numbers to represent notes, a few useful constants 
+		are defined in this library. With them, it is much easier to deal with
+		MIDI nodes. For example:
+		</p>
+
+		<p>
+		<pre>midi_note_on(0, MIDI_C + MIDI_SHARP - 2*MIDI_OCTAVE, 127)</pre>
+		</p>
+
+		<p>
+		All notes refer to the 4th octave by default. So the line above
+		plays a C#2. As a shortcut to the 1st octave, constants such as
+		<code>MIDI_C0</code> can be used.
+		</p>
+
+		<p>
+		Similarly, when receiving MIDI messages from the PC, you can use 
+		constants to figure out type of the incoming message:
+		</p>
+
+		<p>
+		<pre>if (midi_message_available() > 0) {
+	MidiMessage msg = read_midi_message();
+	if (msg.command == MIDI_NOTE_ON && msg.channel == 0) {
+		/* 
+		Since this is a "Note On" command, we know that 
+		- msg.param1 is the MIDI note 
+		- msg.param2 is the "velocity" of the note 
+
+		How do we know this? See the <a href="#miditable">table</a> below.
+		*/
+	}
+}</pre>
+		</p>
+		 
+		<p>
+		There are a couple of things to keep in mind when using <em>MIDI in</em> features of
+		<strong>ardumidi</strong>. Firstly <code>midi_message_available()</code> will always
+		flush the incoming Serial buffer of all non-MIDI data. In practice this
+		means that you can't mix using the Serial library and
+		<strong>ardumidi</strong>
+		(unless you know what you are doing). Secondly the incoming Serial buffer
+		of arduino can store at most 42 MIDI commands so you have to take care
+		that buffer does not overflow. However this does not cause your patch to crash,
+		only couple MIDI messages are lost.
+		</p>
+	
+		<p>	
+		To install the <strong>ardumidi</strong> library, just copy its folder
+		into Arduino's <code>sketchbook/libraries</code> directory.
+		Also note that an example Arduino sketches are included in the 
+		<strong>ttymidi</strong> package. They should appear under Examples
+		in Arduino IDE after you have succesfully installed the library.
+		For instance, <code>ardumidi_test</code>, will play one C-minor
+		chord every second.
+		</p>
+
+
+
+	</div>
+
+	<div class="sectiontext">
+	<h3>General interface</h3>
+		<p>
+		If you are using another serial device in place of the Arduino, you'll
+		need to program it to follow the MIDI specification. To sum this up, most
+		of the commands sent to <strong>ttymidi</strong> are comprised of 3 bytes:
+		</p>
+
+		<p>
+		<pre>
+byte 1       byte 2           byte 3
+status       parameter #1     parameter #2</pre>
+		</p>
+
+		<p>
+		Where <code>status</code> is a combination of a <code>command</code> and a 
+		<code>channel</code>. Why is it called status? I haven't a clue, but that's
+		the name in the MIDI spec. The table below describes the codes for each
+		command as well as their associated parameters.
+		</p>
+
+		<p>
+		<a name="miditable"></a>
+		<table>
+			<tr class="topheader">
+				<td></td>
+				<th>code</th>
+				<th>parameter #1</th>
+				<th>parameter #2</th>
+			</tr>
+			<tr class="odd">
+				<th class="leftheader">note off</th>
+				<td class="hex">0x80-0x8F</td>
+				<td>key </td>
+				<td>velocity </td>
+			</tr>
+			<tr class="even">
+				<th class="leftheader">note on</th>
+				<td class="hex">0x90-0x9F</td>
+				<td>key  </td>
+				<td>velocity  </td>
+			</tr>
+			<tr class="odd">
+				<th class="leftheader">pressure</th>
+				<td class="hex">0xA0-0xAF</td>
+				<td>key  </td>
+				<td>pressure </td>
+			</tr>
+			<tr class="even">
+				<th class="leftheader">controller change</th>
+				<td class="hex">0xB0-0xBF</td>
+				<td>controller</td>
+				<td>value</td>
+			</tr>
+			<tr class="odd">
+				<th class="leftheader">program change</th>
+				<td class="hex">0xC0-0xCF</td>
+				<td>program</td>
+				<td>-</td>
+			</tr>
+			<tr class="even">
+				<th class="leftheader">channel pressure</th>
+				<td class="hex">0xD0-0xDF</td>
+				<td>value</td>
+				<td>-</td>
+			</tr>
+			<tr class="odd">
+				<th class="leftheader">pitch bend</th>
+				<td class="hex">0xE0-0xEF</td>
+				<td>range LSB</td>
+				<td>range MSB</td>
+			</tr>
+			<tr class="even">
+				<th class="leftheader">bytes</th>
+				<td class="hex">0xFF</td>
+				<td>0</td>
+				<td>0</td>
+			</tr>
+		</table>
+		</p>
+
+		<p>
+		Most of these commands and parameters are self-explanatory. All parameters
+		are given as a number in the range 0&ndash;127. That is, they're all 7-bit
+		numbers with a 0 padded to their left (i.e.  <code>0xxxxxxx</code>) in order
+		to make up 1 full byte (8 bits). For channel pressure and program change you
+		should send only one data byte.
+		</p>
+
+		<p>
+		One odd MIDI command is the <code>pitch bend</code>, whose parameter is a
+		14-bit number. For this reason, it is split into two parts: a least 
+		significant byte (LSB) and a most significant byte (MSB). These can be 
+		easily computed by quick logical <code>and</code> and <code>shift</code> operations:
+		</p>
+
+		<p>
+		<pre>
+int range = 12345;
+byte range_lsb = range & 0x7F;
+byte range_msb = range >> 7;</pre>
+		</p>
+
+		<p>
+		The <code>bytes</code> command provides a way to send non-MIDI data
+		through the serial port without messing up with <strong>ttymidi</strong>. 
+		All you need to do is send <code>0xFF 0x00 0x00 len data[0] data[1] ...</code>,
+		where <code>len</code> is the number of <code>data[&bull;]</code> in 
+		the message. When seeing such messages, <strong>ttymidi</strong> will
+		just print them to the screen (but not parse them), so you can use this
+		to print comments from your serial device. You can also use it with 
+		<code>sprintf</code> for debugging.
+		</p>
+
+		<p>
+		You may have noticed that, for all commands, the 1st byte always has a 1
+	   	as the most-significant bit, while the other 2 (or 1) bytes always have a 0.
+		This comes from the MIDI spec, and is used by <strong>ttymidi</strong>
+		for data alignment purposes. Do not try to change that in your 
+		serial device's program, or it will royally mess things up.
+		</p>
+
+	</div>
+
+	<h2>Downloads</h2>
+	<div class="sectiontext">
+
+		<p>
+		<a href="ttymidi.tar.gz"><b>Get ttymidi here</b></a> 
+		</p>
+		
+		<p>
+		The archive includes the <strong>ttymidi</strong> program, examples
+		for <strong>Arduino MIDI library</strong> as
+		well as the <strong>ardumidi</strong> libraries for Arduino. Also, don't 
+		forget to read the <code>README</code> file in that is included in the 
+		archive. It has important information about compiling <strong>ttymidi</strong>.
+		</p>
+
+		<p>
+		It is possible that a more recent version is available at 
+		<a href="https://launchpad.net/ttymidi">the project's trunk series</a>. 
+		</p>
+		
+	</div>
+
+	<h2>Found a Bug?</h2>
+	<div class="sectiontext">
+
+		<p>
+		If you find a bug, <a href="https://bugs.launchpad.net/ttymidi/trunk">please report it!</a>
+		I especially like when the report comes with a patch :) but that's not a requirement.
+		</p>
+
+	</div>
+
+	<h2>Links</h2>
+	<div class="sectiontext">
+		<p>
+		<ul class="nobullets">
+			<li><a href="http://www.arduino.cc">Arduino</a></li>
+			<li><a href="http://www.arduino.cc/playground/Main/MIDILibrary">
+                Arduino MIDI library</a></li>
+			<li><a href="http://www.indiana.edu/~emusic/etext/MIDI/chapter3_MIDI4.shtml">How does MIDI work?</a> &mdash; by Indiana University's CECM</li>
+			<li><a href="http://itp.nyu.edu/physcomp/Labs/MIDIOutput">Arduino MIDI output board</a> &mdash; a physical alternative to <strong>ttymidi</strong>
+			<li><a href="http://www.suse.de/~mana/">Matthias Nagorni's website</a> &mdash; examples for ALSA programming</li>
+			<li><a href="http://qjackctl.sourceforge.net" />QJackCtl</a></li>
+			<li><a href="http://timidity.sourceforge.net">Timidity++</a></li>
+			<li><a href="http://fluidsynth.resonance.org/">Fluidsynth</a></li>
+			<li><a href="http://www.puredata.org/">Puredata</a></li>
+			<li><a href="http://www.essej.net/sooperlooper">Sooperlooper</a></li>
+			<li><a href="http://www.ardour.org">Ardour</a></li>
+		</ul>
+		</p>
+	</div>
+
+	<h2>Authors</h2>
+	<div class="sectiontext">
+		<p>
+			<dl>
+				<dt>Thiago Teixeira</dt>
+				<li>Original developer and maintainer.</li>
+
+				<dt>Jari Suominen</dt>
+				<li>New co-maintainer of ttymidi. Originally contributed the MIDI-out code :)</li>
+			</dl>
+		</p>
+	</div>
+
+	<h2>Changelog</h2>
+	<div class="sectiontext">
+		<p>
+		<dl>
+			<dt>0.60</dt>
+			<li>Bugfix release.</li>
+
+			<dt>0.50</dt>
+			<li>Now with MIDI output capability!</li>
+
+			<dt>0.30</dt>
+			<li>Added "super debug mode". Activate it by pass "-p" (which stands for "print only").</li>
+
+			<dt>0.21</dt>
+			<li>Apparently WConstants.h is no longer distributed with the Arduino software. So I had to replace that with WProgram.h .</li>
+
+			<dt>0.20</dt>
+			<li>Added ability to print comments and random bytes to serial port. Fixed the alignment code.</li>
+
+			<dt>0.11</dt>
+			<li>Changed some function names in the Arduino sketch</li>
+
+			<dt>0.10</dt>
+			<li>Initial release</li>
+		</dl>
+		</p>
+	</div>
+
+	<div class="return">
+		<a href="http://thiagot.com">Return to Thiago Teixeira's main website</a>
+	</div>
+</div>
+
+</body>
+
+</html>
+

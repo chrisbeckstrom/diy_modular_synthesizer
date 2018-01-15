@@ -12,7 +12,7 @@ OscSerial oscSerial;
 long timer; // not sure we need this anymore
 
 void setup() {
-  Serial.begin(115200); //115200
+  Serial.begin(9600); //115200
   oscSerial.begin(Serial); 
 
   // output pins
