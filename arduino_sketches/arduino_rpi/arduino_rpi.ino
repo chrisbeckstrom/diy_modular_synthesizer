@@ -84,6 +84,19 @@ void oscEvent(OscMessage &m) { // *note the & before msg
   m.plug("/12", twelve); 
   m.plug("/13", thirteen); 
 }
+void two(OscMessage &m) {  // *note the & before msg
+  // getting to the message data 
+  int value = m.getInt(0); 
+  if (value == 0) digitalWrite(2, LOW);
+  if (value == 1) digitalWrite(2, HIGH);
+}
+
+void four(OscMessage &m) {  // *note the & before msg
+  // getting to the message data 
+  int value = m.getInt(0); 
+  if (value == 0) digitalWrite(4, LOW);
+  if (value == 1) digitalWrite(4, HIGH);
+}
 
 void seven(OscMessage &m) {  // *note the & before msg
   // getting to the message data 
@@ -91,6 +104,7 @@ void seven(OscMessage &m) {  // *note the & before msg
   if (value == 0) digitalWrite(7, LOW);
   if (value == 1) digitalWrite(7, HIGH);
 }
+
 
 void eight(OscMessage &m) {  // *note the & before msg
   // getting to the message data 

@@ -1,5 +1,5 @@
 #N canvas 376 23 667 851 10;
-#X obj -34 326 route /a0;
+#X obj -30 330 route /a0;
 #X obj 624 -113 loadbang;
 #X obj 624 -83 del 500;
 #X obj 477 216 s osc;
@@ -15,13 +15,12 @@
 #X obj 256 326 route /a4;
 #X obj 329 326 route /a5;
 #X text -37 277 # ANALOG INPUTS;
-#X obj 431 -100 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1
+#X obj 399 -117 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1
 0 1;
 #X obj 468 -12 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
 -1 -1;
 #X obj 1225 -44 r link_step;
 #X obj 1305 -42 r link_reset;
-#X obj 477 14 del 50;
 #X obj 477 96 packOSC;
 #X obj 477 178 pd-mrpeach/osc/unpackOSC;
 #N canvas 391 51 1019 757 link 0;
@@ -88,11 +87,11 @@
 #X floatatom 104 76 5 0 15 0 - - -, f 5;
 #X obj 100 240 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
-#X obj 130 240 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 130 240 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 163 240 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
-#X obj 192 240 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 192 240 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 102 281 wiringPi pin 23 output;
 #X obj 127 312 wiringPi pin 18 output;
@@ -123,7 +122,6 @@ that in 4 bit binary (0-15);
 #X restore -27 -106 pd load_stuff;
 #X text 632 -59 arduino on raspberry pi zero;
 #X text 963 66 arduino on macOS laptop (for dev);
-#X obj 431 -73 metro 200;
 #X text 493 195 this is where we get all the incoming OSC;
 #X text 285 120 send serial messages to arduino;
 #X text 1217 -101 ableton link stuff;
@@ -134,37 +132,50 @@ that in 4 bit binary (0-15);
 #X obj 483 136 o.io.slipserial;
 #X text 974 135 for mac (dev);
 #X text 877 81 # THIS IS FOR TESTING ON MAC, f 11;
-#X floatatom -1 390 5 0 0 0 - - -, f 5;
-#X floatatom 163 140 5 0 0 0 - - -, f 5;
+#X floatatom -22 390 5 0 0 0 - - -, f 5;
 #X obj 366 436 dumpOSC;
 #X obj 112 -59 unpackOSC;
-#X obj 113 -94 mac_externals/mrpeach/udpreceive 3003;
+#X obj 118 -94 mac_externals/mrpeach/udpreceive 3003;
 #X obj 111 -26 print;
 #X msg 431 -45 /13 1;
 #X msg 477 55 /13 0;
-#X connect 0 0 40 0;
+#X text 110 273 between 0 and 1023;
+#X obj 259 227 print;
+#X obj -17 424 / 1023;
+#X obj 180 555 osc~;
+#X obj 254 617 dac~;
+#X obj 93 429 * 1;
+#X obj 399 -90 metro 100;
+#X obj 477 14 del 10;
+#X obj 476 -87 r link_step;
+#X connect 0 0 38 0;
 #X connect 1 0 2 0;
-#X connect 2 0 24 0;
+#X connect 2 0 23 0;
 #X connect 4 0 0 0;
 #X connect 5 0 6 0;
 #X connect 7 0 8 0;
 #X connect 9 0 12 0;
 #X connect 10 0 13 0;
 #X connect 11 0 14 0;
-#X connect 16 0 30 0;
-#X connect 17 0 20 0;
-#X connect 18 0 25 0;
-#X connect 20 0 47 0;
-#X connect 21 0 37 0;
-#X connect 21 0 36 0;
-#X connect 22 0 3 0;
-#X connect 24 0 37 1;
-#X connect 30 0 46 0;
-#X connect 35 0 36 1;
-#X connect 36 0 22 0;
-#X connect 37 0 22 0;
-#X connect 43 0 45 0;
-#X connect 44 0 43 0;
-#X connect 46 0 21 0;
-#X connect 46 0 17 0;
-#X connect 47 0 21 0;
+#X connect 16 0 51 0;
+#X connect 17 0 52 0;
+#X connect 18 0 24 0;
+#X connect 20 0 35 0;
+#X connect 20 0 34 0;
+#X connect 21 0 3 0;
+#X connect 23 0 35 1;
+#X connect 33 0 34 1;
+#X connect 34 0 21 0;
+#X connect 35 0 21 0;
+#X connect 38 0 47 0;
+#X connect 38 0 50 0;
+#X connect 40 0 42 0;
+#X connect 40 0 20 0;
+#X connect 41 0 40 0;
+#X connect 43 0 20 0;
+#X connect 43 0 17 0;
+#X connect 44 0 20 0;
+#X connect 48 0 49 0;
+#X connect 50 0 48 0;
+#X connect 51 0 43 0;
+#X connect 52 0 44 0;
