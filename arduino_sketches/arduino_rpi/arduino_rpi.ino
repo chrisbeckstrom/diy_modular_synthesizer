@@ -92,7 +92,7 @@ void two(OscMessage &m) {  // *note the & before msg
 }
 
 void four(OscMessage &m) {  // *note the & before msg
-  // getting to the message data 
+  // getting to the message data
   int value = m.getInt(0); 
   if (value == 0) digitalWrite(4, LOW);
   if (value == 1) digitalWrite(4, HIGH);
