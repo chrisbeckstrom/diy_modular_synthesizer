@@ -1,77 +1,29 @@
-#N canvas 67 51 1367 827 10;
-#X obj 213 121 o.io.slipserial;
-#X obj -40 118 print;
-#X text -60 135 serial data sent and received here;
-#X obj -40 -96 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
-1;
-#X text 528 75 hit this to open the connection;
-#X obj -36 326 route /a0;
-#X obj 524 11 loadbang;
-#X obj 522 41 del 500;
-#X obj 154 190 s osc;
+#N canvas 376 23 667 851 10;
+#X obj -34 326 route /a0;
+#X obj 624 -113 loadbang;
+#X obj 624 -83 del 500;
+#X obj 477 216 s osc;
 #X obj -34 301 r osc;
 #X obj 37 301 r osc;
-#X obj 35 326 route /a1;
+#X obj 37 326 route /a1;
 #X obj 110 301 r osc;
-#X obj 108 325 route /a2;
+#X obj 110 326 route /a2;
 #X obj 185 301 r osc;
 #X obj 256 301 r osc;
 #X obj 329 301 r osc;
-#X obj 183 325 route /a3;
-#X obj 254 325 route /a4;
-#X obj 327 324 route /a5;
+#X obj 185 326 route /a3;
+#X obj 256 326 route /a4;
+#X obj 329 326 route /a5;
 #X text -37 277 # ANALOG INPUTS;
-#X obj 308 -66 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
-1;
-#X obj 160 -118 r link_step;
-#X msg 171 -51 /led 1;
-#X msg 211 32 /led 0;
-#X obj 265 -28 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+#X obj 431 -100 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1
+0 1;
+#X obj 468 -12 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
 -1 -1;
-#X msg -10 -52 /led 1;
-#X msg -1 52 /led 0;
-#X obj -34 -8 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
--1;
-#X obj -18 25 del 500;
-#X obj -14 -83 metro 1600;
-#X obj 496 382 r link_step;
-#X floatatom 569 411 5 0 0 0 - - -, f 5;
-#X obj 601 380 r link_reset;
-#X obj 607 412 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
--1 -1;
-#X obj 238 4 del 50;
-#X obj 1124 236 ../pd_modular_synth/vco2;
-#X obj 998 560 dac~;
-#X obj 595 503 dec_to_binary;
-#X floatatom 591 461 5 0 15 0 - - -, f 5;
-#X obj 595 533 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
-1;
-#X obj 625 533 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
-1;
-#X obj 658 533 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
-1;
-#X obj 687 533 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
-1;
-#X obj 912 -112 pdwiringPi/pdwiringPi/wiringPi;
-#X obj 775 456 wiringPi;
-#X obj 597 574 wiringPi pin 23 output;
-#X obj 622 605 wiringPi pin 18 output;
-#X obj 658 636 wiringPi pin 15 output;
-#X obj 696 670 wiringPi pin 14 output;
-#X obj 409 674 wiringPi pin 14 output;
-#X msg 469 589 1;
-#X msg 388 632 0;
-#X msg 662 443 1;
-#X msg 709 455 6;
-#X text 894 -127 load stuff;
-#X obj 885 -83 pd-mrpeach/osc/unpackOSC;
-#X obj 944 -60 pd-mrpeach/osc/packOSC;
-#X obj 155 90 packOSC;
-#X obj 924 -25 comport-0.2/comport;
-#X obj 156 163 pd-mrpeach/osc/unpackOSC;
-#X msg 539 149 devicename /dev/ttyACM0 \, baud 115200 \, pollintervall
-;
-#X obj 57 630 abl_link/external/abl_link~;
+#X obj 1225 -44 r link_step;
+#X obj 1305 -42 r link_reset;
+#X obj 477 14 del 50;
+#X obj 477 96 packOSC;
+#X obj 477 178 pd-mrpeach/osc/unpackOSC;
 #N canvas 391 51 1019 757 link 0;
 #X msg 365 141 tempo \$1;
 #X msg 154 142 resolution \$1;
@@ -96,6 +48,15 @@
 #X obj 72 36 delay 1000;
 #X msg 137 76 4;
 #X obj 152 323 s link_step;
+#X text 349 11 connect to ableton link;
+#X text 161 76 resolution = how many clicks per beat (4 = 16th notes)
+;
+#X text 226 324 send the step number (and a bang) on each division
+;
+#X text 17 220 dsp required;
+#X text 139 36 let things settle first;
+#X obj 41 366 sel 0;
+#X obj 46 396 s link_reset;
 #X connect 0 0 10 0;
 #X connect 1 0 10 0;
 #X connect 2 0 10 0;
@@ -103,6 +64,7 @@
 #X connect 9 0 15 0;
 #X connect 10 0 7 0;
 #X connect 10 0 21 0;
+#X connect 10 0 27 0;
 #X connect 10 1 5 0;
 #X connect 10 2 4 0;
 #X connect 10 3 8 0;
@@ -117,51 +79,92 @@
 #X connect 19 0 20 0;
 #X connect 19 0 6 0;
 #X connect 20 0 14 0;
-#X restore 577 308 pd link;
-#X obj 272 -121 loadbang;
-#X obj 216 -80 metro 120;
-#N canvas 723 51 450 300 clock 0;
-#X restore 469 -2 pd clock;
-#X msg 527 91 devicename /dev/ttyACM0 \, baud 115200 \, pollintervall
+#X connect 27 0 28 0;
+#X restore 1220 -74 pd link;
+#X msg 624 -42 devicename /dev/ttyACM0 \, baud 115200 \, pollintervall
 4 \, verbose 1;
-#X connect 0 0 60 0;
-#X connect 3 0 30 0;
-#X connect 6 0 7 0;
-#X connect 7 0 67 0;
-#X connect 9 0 5 0;
-#X connect 10 0 11 0;
-#X connect 12 0 13 0;
-#X connect 14 0 17 0;
-#X connect 15 0 18 0;
-#X connect 16 0 19 0;
-#X connect 21 0 65 0;
-#X connect 23 0 58 0;
-#X connect 23 0 25 0;
-#X connect 24 0 58 0;
-#X connect 25 0 35 0;
-#X connect 26 0 28 0;
-#X connect 26 0 58 0;
-#X connect 27 0 58 0;
-#X connect 28 0 29 0;
-#X connect 29 0 27 0;
-#X connect 30 0 26 0;
-#X connect 31 0 39 0;
-#X connect 33 0 34 0;
-#X connect 35 0 24 0;
-#X connect 38 0 40 0;
-#X connect 38 1 41 0;
-#X connect 38 2 42 0;
-#X connect 38 3 43 0;
-#X connect 39 0 38 0;
-#X connect 40 0 46 0;
-#X connect 41 0 47 0;
-#X connect 42 0 48 0;
-#X connect 43 0 49 0;
-#X connect 51 0 50 0;
-#X connect 52 0 50 0;
-#X connect 53 0 38 0;
-#X connect 54 0 38 0;
-#X connect 58 0 0 0;
-#X connect 60 0 8 0;
-#X connect 65 0 23 0;
-#X connect 67 0 0 1;
+#N canvas 0 22 947 692 4leds 0;
+#X obj 100 210 dec_to_binary;
+#X floatatom 104 76 5 0 15 0 - - -, f 5;
+#X obj 100 240 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+1;
+#X obj 130 240 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X obj 163 240 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+1;
+#X obj 192 240 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X obj 102 281 wiringPi pin 23 output;
+#X obj 127 312 wiringPi pin 18 output;
+#X obj 163 343 wiringPi pin 15 output;
+#X obj 201 377 wiringPi pin 14 output;
+#X obj 87 39 inlet;
+#X text 138 29 send a number in the inlet and the 4 leds will display
+that in 4 bit binary (0-15);
+#X connect 0 0 2 0;
+#X connect 0 1 3 0;
+#X connect 0 2 4 0;
+#X connect 0 3 5 0;
+#X connect 2 0 6 0;
+#X connect 3 0 7 0;
+#X connect 4 0 8 0;
+#X connect 5 0 9 0;
+#X connect 10 0 0 0;
+#X connect 10 0 1 0;
+#X restore 1225 -11 pd 4leds;
+#X text 1386 -44 bang on step 0;
+#N canvas 0 22 450 300 load_stuff 0;
+#X obj 10 34 pdwiringPi/pdwiringPi/wiringPi;
+#X text 4 9 load stuff;
+#X obj 10 58 pd-mrpeach/osc/unpackOSC;
+#X obj 10 82 pd-mrpeach/osc/packOSC;
+#X obj 10 106 comport-0.2/comport;
+#X obj 10 130 abl_link/external/abl_link~;
+#X restore -27 -106 pd load_stuff;
+#X text 632 -59 arduino on raspberry pi zero;
+#X text 963 66 arduino on macOS laptop (for dev);
+#X obj 431 -73 metro 200;
+#X text 493 195 this is where we get all the incoming OSC;
+#X text 285 120 send serial messages to arduino;
+#X text 1217 -101 ableton link stuff;
+#X text 259 155 receive serial messages from arduino;
+#X msg 961 84 devicename /dev/cu.usbmodemFA131 \, baud 115200 \, pollintervall
+4 \, verbose 1;
+#X obj 875 135 o.io.slipserial;
+#X obj 483 136 o.io.slipserial;
+#X text 974 135 for mac (dev);
+#X text 877 81 # THIS IS FOR TESTING ON MAC, f 11;
+#X floatatom -1 390 5 0 0 0 - - -, f 5;
+#X floatatom 163 140 5 0 0 0 - - -, f 5;
+#X obj 366 436 dumpOSC;
+#X obj 112 -59 unpackOSC;
+#X obj 113 -94 mac_externals/mrpeach/udpreceive 3003;
+#X obj 111 -26 print;
+#X msg 431 -45 /13 1;
+#X msg 477 55 /13 0;
+#X connect 0 0 40 0;
+#X connect 1 0 2 0;
+#X connect 2 0 24 0;
+#X connect 4 0 0 0;
+#X connect 5 0 6 0;
+#X connect 7 0 8 0;
+#X connect 9 0 12 0;
+#X connect 10 0 13 0;
+#X connect 11 0 14 0;
+#X connect 16 0 30 0;
+#X connect 17 0 20 0;
+#X connect 18 0 25 0;
+#X connect 20 0 47 0;
+#X connect 21 0 37 0;
+#X connect 21 0 36 0;
+#X connect 22 0 3 0;
+#X connect 24 0 37 1;
+#X connect 30 0 46 0;
+#X connect 35 0 36 1;
+#X connect 36 0 22 0;
+#X connect 37 0 22 0;
+#X connect 43 0 45 0;
+#X connect 44 0 43 0;
+#X connect 46 0 21 0;
+#X connect 46 0 17 0;
+#X connect 47 0 21 0;

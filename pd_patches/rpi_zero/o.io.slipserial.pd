@@ -1,5 +1,4 @@
 #N canvas 419 440 756 268 10;
-#X obj 251 231 import mrpeach;
 #X obj 303 65 loadbang;
 #X obj 299 22 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
 -1;
@@ -13,16 +12,16 @@
 #X obj 301 199 print errors;
 #X obj 226 19 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
 -1;
-#X obj 32 46 pd-mrpeach/slip/slipenc 65536;
-#X obj 99 120 comport-0.2/comport;
-#X obj 95 179 pd-mrpeach/slip/slipdec 65536;
-#X connect 1 0 5 0;
-#X connect 3 0 11 0;
-#X connect 5 0 12 0;
-#X connect 6 0 12 0;
-#X connect 10 0 12 0;
+#X obj 32 46 mrpeach/slipenc 65536;
+#X obj 99 120 comport;
+#X obj 95 179 mrpeach/slipdec 65536;
+#X connect 0 0 4 0;
+#X connect 2 0 10 0;
+#X connect 4 0 11 0;
+#X connect 5 0 11 0;
+#X connect 9 0 11 0;
+#X connect 10 0 11 0;
+#X connect 11 0 6 0;
 #X connect 11 0 12 0;
-#X connect 12 0 7 0;
-#X connect 12 0 13 0;
-#X connect 12 1 9 0;
-#X connect 13 0 4 0;
+#X connect 11 1 8 0;
+#X connect 12 0 3 0;

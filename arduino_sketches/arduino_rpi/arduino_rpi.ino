@@ -9,19 +9,8 @@
 #include <SPI.h>  
  
 OscSerial oscSerial;
-long timer;
+long timer; // not sure we need this anymore
 
-// set up variables for pin values
-int analog0 = A0;
-int analog1 = A1;
-int analog2 = A2;
-int analog3 = A3;
-int analog4 = A4;
-int analog5 = A5;
-
-
-
- 
 void setup() {
   Serial.begin(115200); //115200
   oscSerial.begin(Serial); 
@@ -35,12 +24,12 @@ void setup() {
   pinMode(13, OUTPUT);
 
   // set up analog input pins
-  pinMode(analog0, INPUT);
-  pinMode(analog1, INPUT);
-  pinMode(analog2, INPUT);
-  pinMode(analog3, INPUT);
-  pinMode(analog4, INPUT);
-  pinMode(analog5, INPUT);
+  pinMode(A0, INPUT);
+  pinMode(A1, INPUT);
+  pinMode(A2, INPUT);
+  pinMode(A3, INPUT);
+  pinMode(A4, INPUT);
+  pinMode(A5, INPUT);
 }
  
 void loop() {
@@ -49,28 +38,28 @@ void loop() {
 
   // TODO: make a nice function for this
   OscMessage a0("/a0");
-  a0.add(analogRead(analog0));
+  a0.add(analogRead(A0));
   oscSerial.send(a0);
 
-  OscMessage a1("/a1");
-  a1.add(analogRead(analog1));
-  oscSerial.send(a1);
+  //OscMessage a1("/a1");
+  //a1.add(analogRead(analog1));
+  //oscSerial.send(a1);
 
-  OscMessage a2("/a2");
-  a2.add(analogRead(analog2));
-  oscSerial.send(a2);
+  //OscMessage a2("/a2");
+  //a2.add(analogRead(analog2));
+  //oscSerial.send(a2);
 
-  OscMessage a3("/a3");
-  a3.add(analogRead(analog3));
-  oscSerial.send(a3);
+  //OscMessage a3("/a3");
+  //a3.add(analogRead(analog3));
+  //oscSerial.send(a3);
 
-  OscMessage a4("/a4");
-  a4.add(analogRead(analog4));
-  oscSerial.send(a4);
+  //OscMessage a4("/a4");
+  //a4.add(analogRead(analog4));
+  //oscSerial.send(a4);
 
-  OscMessage a5("/a5");
-  a5.add(analogRead(analog5));
-  oscSerial.send(a5);
+  //OscMessage a5("/a5");
+  //a5.add(analogRead(analog5));
+  //oscSerial.send(a5);
   
   // important! 
   oscSerial.listen();
@@ -78,16 +67,49 @@ void loop() {
   
    
 }
- 
+
+
+// create actions for each of the gate/trigger pins 
+
+
 void oscEvent(OscMessage &m) { // *note the & before msg
-  // receive a message 
-  m.plug("/led", ledFunction); 
+  // receive osc messages
+
+  // top row: turn each pin on or off by sending /number 0|1
+  // i.e. `/2 1` will turn pin #2 on (make it go HIGH)
+  m.plug("/2", two);
+  m.plug("/4", four);
+  m.plug("/7", seven);
+  m.plug("/8", eight);
+  m.plug("/12", twelve); 
+  m.plug("/13", thirteen); 
 }
 
-void ledFunction(OscMessage &m) {  // *note the & before msg
+void seven(OscMessage &m) {  // *note the & before msg
+  // getting to the message data 
+  int value = m.getInt(0); 
+  if (value == 0) digitalWrite(7, LOW);
+  if (value == 1) digitalWrite(7, HIGH);
+}
+
+void eight(OscMessage &m) {  // *note the & before msg
+  // getting to the message data 
+  int value = m.getInt(0); 
+  if (value == 0) digitalWrite(8, LOW);
+  if (value == 1) digitalWrite(8, HIGH);
+}
+
+void twelve(OscMessage &m) {  // *note the & before msg
+  // getting to the message data 
+  int value = m.getInt(0); 
+  if (value == 0) digitalWrite(12, LOW);
+  if (value == 1) digitalWrite(12, HIGH);
+}
+void thirteen(OscMessage &m) {  // *note the & before msg
   // getting to the message data 
   int value = m.getInt(0); 
   if (value == 0) digitalWrite(13, LOW);
   if (value == 1) digitalWrite(13, HIGH);
 }
+
 
