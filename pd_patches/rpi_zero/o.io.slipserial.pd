@@ -1,4 +1,4 @@
-#N canvas 419 440 756 268 10;
+#N canvas 416 438 756 268 10;
 #X obj 303 65 loadbang;
 #X obj 299 22 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
 -1;
@@ -6,22 +6,26 @@
 #X obj 74 240 outlet;
 #X msg 296 142 baud 115200;
 #X obj 261 46 inlet;
-#X obj 57 157 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
--1;
 #X obj 49 99 print;
 #X obj 301 199 print errors;
 #X obj 226 19 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
 -1;
-#X obj 32 46 mrpeach/slipenc 65536;
 #X obj 99 120 comport;
-#X obj 95 179 mrpeach/slipdec 65536;
+#X obj 68 48 pd-mrpeach/slip/slipenc 65536;
+#X obj 82 205 pd-mrpeach/slip/slipdec 65536;
+#X obj 10 180 mrpeach/slipdec 65536;
+#X text 141 180 for mac;
+#X obj 109 81 mrpeach/slipenc 65536;
 #X connect 0 0 4 0;
 #X connect 2 0 10 0;
-#X connect 4 0 11 0;
-#X connect 5 0 11 0;
+#X connect 2 0 14 0;
+#X connect 4 0 9 0;
+#X connect 5 0 9 0;
+#X connect 8 0 9 0;
 #X connect 9 0 11 0;
-#X connect 10 0 11 0;
-#X connect 11 0 6 0;
-#X connect 11 0 12 0;
-#X connect 11 1 8 0;
+#X connect 9 0 12 0;
+#X connect 9 1 7 0;
+#X connect 10 0 9 0;
+#X connect 11 0 3 0;
 #X connect 12 0 3 0;
+#X connect 14 0 9 0;
