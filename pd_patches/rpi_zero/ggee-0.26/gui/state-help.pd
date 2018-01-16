@@ -1,0 +1,3 @@
+#N canvas 523 175 450 300 10;
+#X obj 180 119 state;
+#X text 67 43 any idea for state saving;

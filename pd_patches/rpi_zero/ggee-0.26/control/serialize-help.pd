@@ -1,0 +1,8 @@
+#N canvas 246 82 551 292 10;
+#X obj 34 106 serialize 4;
+#X obj 34 141 print;
+#X floatatom 34 69;
+#X text 30 195 (C) 2000 Guenter Geiger;
+#X text 30 39 serialize ... turn a stream of floats into a list;
+#X connect 0 0 1 0;
+#X connect 2 0 0 0;

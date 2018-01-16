@@ -1,0 +1,20 @@
+#N canvas 415 301 778 304 10;
+#X obj 19 24 inlet;
+#X text 61 25 signal;
+#X obj 145 24 inlet;
+#X obj 138 134 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+1;
+#X obj 106 160 spigot;
+#X obj 143 112 sel \$1;
+#X obj 111 244 outlet;
+#X text 237 109 program - - - mute a signal unless the 2nd inlet is
+set to a particular number;
+#X obj 337 25 inlet;
+#X text 185 24 global program;
+#X text 381 26 which program number is this thing?;
+#X connect 0 0 4 0;
+#X connect 2 0 5 0;
+#X connect 3 0 4 1;
+#X connect 4 0 6 0;
+#X connect 5 0 3 0;
+#X connect 8 0 5 1;

@@ -1,34 +1,16 @@
-#N canvas 142 51 1220 818 10;
-#X obj -30 330 route /a0;
-#X obj 624 -113 loadbang;
-#X obj 624 -83 del 500;
-#X obj 482 234 s osc;
-#X obj -34 301 r osc;
-#X obj 37 301 r osc;
-#X obj 37 326 route /a1;
-#X obj 110 301 r osc;
-#X obj 110 326 route /a2;
-#X obj 185 301 r osc;
-#X obj 256 301 r osc;
-#X obj 329 301 r osc;
-#X obj 185 326 route /a3;
-#X obj 256 326 route /a4;
-#X obj 329 326 route /a5;
-#X text -37 277 # ANALOG INPUTS;
-#X obj -26 21 r link_step;
-#X obj 482 196 pd-mrpeach/osc/unpackOSC;
-#N canvas 510 95 947 692 4leds 0;
+#N canvas 13 23 828 851 10;
+#N canvas 813 169 947 692 4leds 0;
 #X obj 100 210 dec_to_binary;
-#X floatatom 104 76 5 0 15 0 - - -, f 5;
+#X floatatom 156 87 5 0 15 0 - - -, f 5;
 #X obj 100 240 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
 #X obj 130 240 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
-#X obj 163 240 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 163 240 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 192 240 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
-#X obj 87 39 inlet;
+#X obj 95 53 inlet;
 #X text 138 29 send a number in the inlet and the 4 leds will display
 that in 4 bit binary (0-15);
 #X obj 102 281 pdwiringPi/pdwiringPi/wiringPi pin 23 output;
@@ -44,6 +26,7 @@ that in 4 bit binary (0-15);
 #X connect 4 0 10 0;
 #X connect 5 0 11 0;
 #X connect 6 0 1 0;
+#X connect 6 0 0 0;
 #X restore -26 47 pd 4leds;
 #N canvas 0 51 450 300 load_stuff 0;
 #X obj 10 34 pdwiringPi/pdwiringPi/wiringPi;
@@ -54,44 +37,28 @@ that in 4 bit binary (0-15);
 #X obj 10 130 abl_link/external/abl_link~;
 #X obj 10 156 pd-mrpeach/osc/routeOSC;
 #X restore -27 -106 pd load_stuff;
-#X text 632 -59 arduino on raspberry pi zero;
-#X text 963 66 arduino on macOS laptop (for dev);
-#X text 498 213 this is where we get all the incoming OSC;
-#X text 285 120 send serial messages to arduino;
-#X text 259 155 receive serial messages from arduino;
-#X msg 961 84 devicename /dev/cu.usbmodemFA131 \, baud 115200 \, pollintervall
-4 \, verbose 1;
-#X obj 483 136 o.io.slipserial;
-#X text 974 135 for mac (dev);
-#X text 877 81 # THIS IS FOR TESTING ON MAC, f 11;
-#X text 110 273 between 0 and 1023;
-#X obj 259 227 print;
-#X obj -27 557 osc~;
-#X obj -20 674 dac~;
-#X msg -6 527 200;
-#X obj 15 627 noise~;
-#N canvas 149 51 1071 821 16ths 1;
+#N canvas 149 51 1071 821 16ths 0;
 #X obj 51 39 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0 1
 ;
-#X obj 121 200 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
--1 -1;
 #X obj 51 66 metro 100;
-#X obj 211 57 r link_step;
-#X obj 90 352 s to_osc;
-#X obj 296 57 r clock_step;
-#X msg 130 267 /13 0;
-#X obj 138 229 del 60;
-#X msg 84 167 /13 1;
-#X connect 0 0 2 0;
-#X connect 1 0 7 0;
-#X connect 2 0 8 0;
-#X connect 3 0 8 0;
-#X connect 6 0 4 0;
-#X connect 7 0 6 0;
-#X connect 8 0 1 0;
-#X connect 8 0 4 0;
+#X obj 477 77 r link_step;
+#X obj 483 167 makenote 127 100;
+#X obj 486 208 noteout;
+#X msg 482 137 45;
+#X obj 343 188 makenote 127 100;
+#X obj 346 229 noteout;
+#X msg 342 158 43;
+#X obj 343 76 r link_reset;
+#X connect 0 0 1 0;
+#X connect 2 0 5 0;
+#X connect 3 0 4 0;
+#X connect 3 1 4 1;
+#X connect 5 0 3 0;
+#X connect 6 0 7 0;
+#X connect 6 1 7 1;
+#X connect 8 0 6 0;
+#X connect 9 0 8 0;
 #X restore -21 113 pd 16ths;
-#X obj 506 60 r to_osc;
 #N canvas 0 51 450 300 reset 0;
 #X obj 121 200 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
 -1 -1;
@@ -116,44 +83,83 @@ that in 4 bit binary (0-15);
 #X restore -21 133 pd reset;
 #X text 43 114 send 16th note pulses to pin 13;
 #X text 44 133 send pulse to pin 12 on step = 0;
-#N canvas 427 51 856 480 network 0;
+#N canvas 206 23 1203 650 network 1;
 #X obj 24 83 unpackOSC;
 #X obj 18 29 mac_externals/mrpeach/udpreceive 3003;
 #X obj 303 29 pd-mrpeach/net/udpreceive 3003;
 #X text 15 7 mac network connect;
-#X obj 189 120 s to_osc;
+#X obj 248 121 s to_osc;
 #X text 303 9 rpi network connect;
-#X obj 285 120 print udpreceive;
-#X obj 11 276 mac_externals/mrpeach/routeOSC /g1;
-#X obj 26 301 pd-mrpeach/osc/routeOSC /g1;
-#X obj 23 376 s g1;
-#X obj 243 276 mac_externals/mrpeach/routeOSC /g2;
-#X obj 258 301 pd-mrpeach/osc/routeOSC /g2;
-#X obj 255 376 s g2;
-#X obj 464 276 mac_externals/mrpeach/routeOSC /g3;
-#X obj 479 301 pd-mrpeach/osc/routeOSC /g3;
-#X obj 476 376 s g3;
+#X obj 13 281 mac_externals/mrpeach/routeOSC /g1;
+#X obj 28 306 pd-mrpeach/osc/routeOSC /g1;
+#X obj 25 381 s g1;
+#X obj 80 342 mac_externals/mrpeach/routeOSC /g2;
+#X obj 95 367 pd-mrpeach/osc/routeOSC /g2;
+#X obj 92 442 s g2;
+#X obj 144 405 mac_externals/mrpeach/routeOSC /g3;
+#X obj 159 430 pd-mrpeach/osc/routeOSC /g3;
+#X obj 156 505 s g3;
+#X obj 204 468 mac_externals/mrpeach/routeOSC /g4;
+#X obj 219 493 pd-mrpeach/osc/routeOSC /g4;
+#X obj 216 568 s g4;
+#X obj 312 120 print udpreceive:;
+#X obj 709 189 packOSC;
+#X obj 800 248 mac_externals/mrpeach/udpsend;
+#X msg 837 149 disconnect;
+#X msg 827 120 connect cbphone.local 9000;
+#X obj 824 69 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+1;
+#X obj 818 15 loadbang;
+#X obj 823 42 del 500;
+#X text 905 95 connect to cbphone (repeatedly);
+#X obj 826 95 metro 50000;
+#X obj 593 138 s to_phone;
+#X obj 707 156 r to_phone;
+#X msg 592 110 /g1/1/1 1;
+#X msg 669 105 /program \$1;
+#X obj 668 51 r program;
+#X text 1001 248 << mac;
+#X obj 713 276 pd-mrpeach/net/udpsend;
+#X text 893 278 << linux;
 #X connect 0 0 4 0;
 #X connect 0 0 6 0;
 #X connect 0 0 7 0;
-#X connect 0 0 8 0;
+#X connect 0 0 9 0;
+#X connect 0 0 12 0;
 #X connect 0 0 10 0;
 #X connect 0 0 13 0;
-#X connect 0 0 11 0;
-#X connect 0 0 14 0;
+#X connect 0 0 15 0;
+#X connect 0 0 16 0;
+#X connect 0 0 18 0;
 #X connect 1 0 0 0;
 #X connect 2 0 0 0;
-#X connect 7 0 9 0;
-#X connect 8 0 9 0;
-#X connect 10 0 12 0;
-#X connect 11 0 12 0;
-#X connect 13 0 15 0;
-#X connect 14 0 15 0;
+#X connect 6 0 8 0;
+#X connect 7 0 8 0;
+#X connect 9 0 11 0;
+#X connect 10 0 11 0;
+#X connect 12 0 14 0;
+#X connect 13 0 14 0;
+#X connect 15 0 17 0;
+#X connect 16 0 17 0;
+#X connect 19 0 20 0;
+#X connect 19 0 34 0;
+#X connect 21 0 20 0;
+#X connect 21 0 34 0;
+#X connect 22 0 20 0;
+#X connect 22 0 34 0;
+#X connect 23 0 27 0;
+#X connect 24 0 25 0;
+#X connect 25 0 23 0;
+#X connect 27 0 22 0;
+#X connect 29 0 19 0;
+#X connect 30 0 28 0;
+#X connect 31 0 28 0;
+#X connect 32 0 31 0;
 #X restore -27 -80 pd network;
-#N canvas 55 51 1418 827 sequencer_matrix 0;
-#X obj 547 -194 float;
+#N canvas 0 33 1418 827 sequencer_matrix 0;
+#X obj 544 -321 float;
 #X obj 551 2 hradio 16 1 0 16 empty empty empty 0 -8 0 10 -262144 -1
--1 0;
+-1 11;
 #X obj 551 28 select 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15;
 #X obj 181 162 spigot;
 #X obj 204 103 r g1s1;
@@ -218,15 +224,15 @@ that in 4 bit binary (0-15);
 #X obj 999 108 r g1s14;
 #X obj 1093 109 r g1s15;
 #X obj 1177 109 r g1s16;
-#X text 445 -302 reset;
-#X floatatom 549 -117 5 0 0 0 - - -, f 5;
-#X floatatom 730 -195 5 1 16 0 - - -, f 5;
-#X text 764 -197 length;
-#X obj 824 -96 send toGUI;
-#X msg 822 -125 list /seq1/step \$1;
-#X obj 427 -373 r list1;
-#X obj 429 -348 route /seq1/reset;
-#X obj 588 -118 s seq1step;
+#X text 442 -429 reset;
+#X floatatom 546 -244 5 0 0 0 - - -, f 5;
+#X floatatom 727 -322 5 1 16 0 - - -, f 5;
+#X text 761 -324 length;
+#X obj 821 -223 send toGUI;
+#X msg 819 -252 list /seq1/step \$1;
+#X obj 424 -500 r list1;
+#X obj 426 -475 route /seq1/reset;
+#X obj 585 -245 s seq1step;
 #N canvas 57 77 1269 585 seq1_toggles 0;
 #X obj 561 -265 s g1s1;
 #X obj 566 -287 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1
@@ -421,7 +427,7 @@ that in 4 bit binary (0-15);
 #X connect 94 0 23 0;
 #X connect 95 0 94 0;
 #X restore 62 105 pd seq1_toggles;
-#X obj 562 -264 r clock;
+#X obj 559 -391 r clock;
 #N canvas 122 50 1440 761 seq2_toggles 0;
 #X obj 566 -287 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1
 0 1;
@@ -681,12 +687,12 @@ that in 4 bit binary (0-15);
 #X obj 981 346 s gate2;
 #X obj 1060 347 s gate2;
 #X obj 1159 347 s gate2;
-#X text 521 -378 MASTER SEQUENCER;
+#X text 518 -505 MASTER SEQUENCER;
 #X text 81 -251 show active step in GUI display;
-#X obj 734 -257 r list1;
-#X obj 731 -228 route /length;
-#X obj 376 -330 r reset;
-#X msg 487 -302 15;
+#X obj 731 -384 r list1;
+#X obj 728 -355 route /length;
+#X obj 373 -457 r reset;
+#X msg 484 -429 15;
 #X obj 160 445 spigot;
 #X floatatom 189 423 5 0 0 0 - - -, f 5;
 #X obj 220 445 spigot;
@@ -1204,32 +1210,32 @@ that in 4 bit binary (0-15);
 #X obj 1065 527 r g4s15;
 #X obj 1149 527 r g4s16;
 #X text 370 24 reset on length setting +1;
-#X text 729 -396 GATE SEQUENCER this is the main sequencer that controls
+#X text 726 -523 GATE SEQUENCER this is the main sequencer that controls
 the 4 main voices;
-#X obj 837 -260 loadbang;
-#X msg 832 -230 15;
-#X obj 697 -176 + 1;
-#X obj 607 -195 +;
-#X obj 660 -327 route /direction;
-#X obj 660 -356 r list1;
-#X floatatom 656 -305 5 0 0 0 - - -, f 5;
-#X obj 654 -286 sel 0;
-#X msg 644 -259 1;
-#X msg 676 -263 -1;
-#X obj 434 -228 sel;
-#X obj 830 -300 send toGUI;
-#X obj 830 -369 loadbang;
-#X msg 833 -321 list /direction \$1;
-#X msg 832 -342 0;
-#X obj 977 -183 send toGUI;
-#X obj 977 -252 loadbang;
-#X msg 980 -204 list /length \$1;
-#X msg 979 -225 15;
-#X floatatom 466 -250 5 0 0 0 - - -, f 5;
-#X obj 439 -197 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+#X obj 834 -387 loadbang;
+#X msg 829 -357 15;
+#X obj 694 -303 + 1;
+#X obj 604 -322 +;
+#X obj 657 -454 route /direction;
+#X obj 657 -483 r list1;
+#X floatatom 653 -432 5 0 0 0 - - -, f 5;
+#X obj 651 -413 sel 0;
+#X msg 641 -386 1;
+#X msg 673 -390 -1;
+#X obj 431 -355 sel;
+#X obj 827 -427 send toGUI;
+#X obj 827 -496 loadbang;
+#X msg 830 -448 list /direction \$1;
+#X msg 829 -469 0;
+#X obj 974 -310 send toGUI;
+#X obj 974 -379 loadbang;
+#X msg 977 -331 list /length \$1;
+#X msg 976 -352 15;
+#X floatatom 463 -377 5 0 0 0 - - -, f 5;
+#X obj 436 -324 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
 -1 -1;
-#X obj 550 -148 mod 16;
-#X msg 464 -173 0;
+#X obj 547 -275 mod 16;
+#X msg 461 -300 0;
 #X text 58 82 SEQ1;
 #X text 64 237 SEQ2;
 #X text 62 380 SEQ3;
@@ -1243,7 +1249,7 @@ the 4 main voices;
 1;
 #X obj 161 -315 routeOSC /1;
 #X obj 162 -285 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1
-0 1;
+1 1;
 #X obj 96 -277 s g1s1;
 #X obj 188 -287 s g1s2;
 #X obj 252 -312 routeOSC /1;
@@ -1267,7 +1273,7 @@ the 4 main voices;
 #X obj 162 -169 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1
 0 1;
 #X obj 253 -166 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1
-0 1;
+1 1;
 #X obj 250 -220 routeOSC /3;
 #X obj 337 -166 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1
 0 1;
@@ -1286,14 +1292,14 @@ the 4 main voices;
 #X obj 363 -168 s g1s8;
 #X obj 72 -96 routeOSC /1;
 #X obj 163 -100 routeOSC /2;
-#X obj 72 -40 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 72 -40 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
-#X obj 166 -46 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 166 -46 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
-#X obj 257 -43 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 257 -43 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 254 -97 routeOSC /3;
-#X obj 341 -43 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 341 -43 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 70 -125 r g1;
 #X obj 162 -126 r g1;
@@ -1310,9 +1316,9 @@ the 4 main voices;
 #X obj 367 -45 s g1s12;
 #X obj 72 23 routeOSC /1;
 #X obj 163 19 routeOSC /2;
-#X obj 72 79 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0 1
+#X obj 72 79 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1 1
 ;
-#X obj 166 73 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 166 73 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 257 76 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
@@ -1399,7 +1405,7 @@ them to different steps of sequencer;
 #X connect 76 0 67 0;
 #X connect 76 0 80 0;
 #X connect 82 0 0 0;
-#X restore 18 -291 pd g1;
+#X restore 20 -291 pd g1;
 #X text 59 -292 route OSC messages;
 #N canvas 510 74 688 665 g2 0;
 #X obj 68 -335 routeOSC /1;
@@ -1411,7 +1417,7 @@ them to different steps of sequencer;
 1;
 #X obj 161 -315 routeOSC /1;
 #X obj 162 -285 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1
-0 1;
+1 1;
 #X obj 252 -312 routeOSC /1;
 #X obj 253 -282 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1
 0 1;
@@ -1425,12 +1431,12 @@ them to different steps of sequencer;
 #X obj 68 -163 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
 #X obj 162 -169 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1
-0 1;
+1 1;
 #X obj 253 -166 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1
 0 1;
 #X obj 250 -220 routeOSC /3;
 #X obj 337 -166 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1
-0 1;
+1 1;
 #X obj 334 -220 routeOSC /4;
 #X obj 66 -190 routeOSC /2;
 #X obj 161 -199 routeOSC /2;
@@ -1440,12 +1446,12 @@ them to different steps of sequencer;
 #X obj 163 -100 routeOSC /2;
 #X obj 72 -40 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
-#X obj 166 -46 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 166 -46 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
-#X obj 257 -43 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 257 -43 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 254 -97 routeOSC /3;
-#X obj 341 -43 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 341 -43 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 338 -97 routeOSC /4;
 #X obj 70 -67 routeOSC /3;
@@ -1454,11 +1460,11 @@ them to different steps of sequencer;
 #X obj 340 -73 routeOSC /3;
 #X obj 72 23 routeOSC /1;
 #X obj 163 19 routeOSC /2;
-#X obj 72 79 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0 1
+#X obj 72 79 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1 1
 ;
-#X obj 166 73 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 166 73 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
-#X obj 257 76 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 257 76 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 254 22 routeOSC /3;
 #X obj 341 76 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
@@ -1567,6 +1573,8 @@ them to different steps of sequencer;
 #X connect 65 0 43 0;
 #X connect 66 0 45 0;
 #X restore 20 -266 pd g2;
+#X obj 566 -52 r link_step;
+#X floatatom 584 -22 5 0 0 0 - - -, f 5;
 #N canvas 510 74 688 665 g3 0;
 #X obj 68 -335 routeOSC /1;
 #X obj 66 -306 routeOSC /1;
@@ -1577,26 +1585,26 @@ them to different steps of sequencer;
 1;
 #X obj 161 -315 routeOSC /1;
 #X obj 162 -285 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1
-0 1;
+1 1;
 #X obj 252 -312 routeOSC /1;
 #X obj 253 -282 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1
-0 1;
+1 1;
 #X obj 250 -336 routeOSC /3;
 #X obj 336 -312 routeOSC /1;
 #X obj 337 -282 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1
-0 1;
+1 1;
 #X obj 334 -336 routeOSC /4;
 #X obj 68 -219 routeOSC /1;
 #X obj 159 -223 routeOSC /2;
-#X obj 68 -163 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 68 -163 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 162 -169 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1
 0 1;
 #X obj 253 -166 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1
-0 1;
+1 1;
 #X obj 250 -220 routeOSC /3;
 #X obj 337 -166 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1
-0 1;
+1 1;
 #X obj 334 -220 routeOSC /4;
 #X obj 66 -190 routeOSC /2;
 #X obj 161 -199 routeOSC /2;
@@ -1604,14 +1612,14 @@ them to different steps of sequencer;
 #X obj 336 -196 routeOSC /2;
 #X obj 72 -96 routeOSC /1;
 #X obj 163 -100 routeOSC /2;
-#X obj 72 -40 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 72 -40 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
-#X obj 166 -46 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 166 -46 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 257 -43 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
 #X obj 254 -97 routeOSC /3;
-#X obj 341 -43 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 341 -43 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 338 -97 routeOSC /4;
 #X obj 70 -67 routeOSC /3;
@@ -1622,9 +1630,9 @@ them to different steps of sequencer;
 #X obj 163 19 routeOSC /2;
 #X obj 72 79 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0 1
 ;
-#X obj 166 73 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 166 73 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
-#X obj 257 76 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 257 76 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 254 22 routeOSC /3;
 #X obj 341 76 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
@@ -1733,8 +1741,172 @@ them to different steps of sequencer;
 #X connect 65 0 43 0;
 #X connect 66 0 45 0;
 #X restore 20 -240 pd g3;
-#X obj 566 -52 r link_step;
-#X floatatom 584 -22 5 0 0 0 - - -, f 5;
+#N canvas 510 74 688 665 g4 0;
+#X obj 68 -335 routeOSC /1;
+#X obj 66 -306 routeOSC /1;
+#X text 14 -297 row;
+#X obj 159 -339 routeOSC /2;
+#X text 13 -338 columns;
+#X obj 68 -279 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X obj 161 -315 routeOSC /1;
+#X obj 162 -285 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1
+1 1;
+#X obj 252 -312 routeOSC /1;
+#X obj 253 -282 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1
+1 1;
+#X obj 250 -336 routeOSC /3;
+#X obj 336 -312 routeOSC /1;
+#X obj 337 -282 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1
+1 1;
+#X obj 334 -336 routeOSC /4;
+#X obj 68 -219 routeOSC /1;
+#X obj 159 -223 routeOSC /2;
+#X obj 68 -163 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+1;
+#X obj 162 -169 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1
+1 1;
+#X obj 253 -166 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1
+1 1;
+#X obj 250 -220 routeOSC /3;
+#X obj 337 -166 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1
+0 1;
+#X obj 334 -220 routeOSC /4;
+#X obj 66 -190 routeOSC /2;
+#X obj 161 -199 routeOSC /2;
+#X obj 252 -196 routeOSC /2;
+#X obj 336 -196 routeOSC /2;
+#X obj 72 -96 routeOSC /1;
+#X obj 163 -100 routeOSC /2;
+#X obj 72 -40 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X obj 166 -46 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X obj 257 -43 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+1;
+#X obj 254 -97 routeOSC /3;
+#X obj 341 -43 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+1;
+#X obj 338 -97 routeOSC /4;
+#X obj 70 -67 routeOSC /3;
+#X obj 165 -76 routeOSC /3;
+#X obj 256 -73 routeOSC /3;
+#X obj 340 -73 routeOSC /3;
+#X obj 72 23 routeOSC /1;
+#X obj 163 19 routeOSC /2;
+#X obj 72 79 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0 1
+;
+#X obj 166 73 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X obj 257 76 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+1;
+#X obj 254 22 routeOSC /3;
+#X obj 341 76 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X obj 338 22 routeOSC /4;
+#X obj 70 52 routeOSC /4;
+#X obj 165 43 routeOSC /4;
+#X obj 256 46 routeOSC /4;
+#X obj 340 46 routeOSC /4;
+#X text 55 -409 take osc messages sent from `pd network` and route
+them to different steps of sequencer;
+#X obj 66 -364 r g4;
+#X obj 158 -365 r g4;
+#X obj 254 -365 r g4;
+#X obj 334 -362 r g4;
+#X obj 66 -248 r g4;
+#X obj 158 -249 r g4;
+#X obj 254 -249 r g4;
+#X obj 334 -246 r g4;
+#X obj 70 -125 r g4;
+#X obj 162 -126 r g4;
+#X obj 258 -126 r g4;
+#X obj 338 -123 r g4;
+#X obj 70 -6 r g4;
+#X obj 162 -7 r g4;
+#X obj 258 -7 r g4;
+#X obj 338 -4 r g4;
+#X obj 96 -277 s g4s1;
+#X obj 188 -287 s g4s2;
+#X obj 279 -284 s g4s3;
+#X obj 363 -284 s g4s4;
+#X obj 96 -161 s g4s5;
+#X obj 188 -171 s g4s6;
+#X obj 279 -168 s g4s7;
+#X obj 363 -168 s g4s8;
+#X obj 100 -38 s g4s9;
+#X obj 192 -48 s g4s10;
+#X obj 283 -45 s g4s11;
+#X obj 367 -45 s g4s12;
+#X obj 100 81 s g4s13;
+#X obj 192 71 s g4s14;
+#X obj 283 74 s g4s15;
+#X obj 367 74 s g4s16;
+#X connect 0 0 1 0;
+#X connect 1 0 5 0;
+#X connect 1 0 67 0;
+#X connect 3 0 6 0;
+#X connect 6 0 7 0;
+#X connect 6 0 68 0;
+#X connect 8 0 9 0;
+#X connect 8 0 69 0;
+#X connect 10 0 8 0;
+#X connect 11 0 12 0;
+#X connect 11 0 70 0;
+#X connect 13 0 11 0;
+#X connect 14 0 22 0;
+#X connect 15 0 23 0;
+#X connect 19 0 24 0;
+#X connect 21 0 25 0;
+#X connect 22 0 16 0;
+#X connect 22 0 71 0;
+#X connect 23 0 17 0;
+#X connect 23 0 72 0;
+#X connect 24 0 18 0;
+#X connect 24 0 73 0;
+#X connect 25 0 20 0;
+#X connect 25 0 74 0;
+#X connect 26 0 34 0;
+#X connect 27 0 35 0;
+#X connect 31 0 36 0;
+#X connect 33 0 37 0;
+#X connect 34 0 28 0;
+#X connect 34 0 75 0;
+#X connect 35 0 29 0;
+#X connect 35 0 76 0;
+#X connect 36 0 30 0;
+#X connect 36 0 77 0;
+#X connect 37 0 32 0;
+#X connect 37 0 78 0;
+#X connect 38 0 46 0;
+#X connect 39 0 47 0;
+#X connect 43 0 48 0;
+#X connect 45 0 49 0;
+#X connect 46 0 40 0;
+#X connect 46 0 79 0;
+#X connect 47 0 41 0;
+#X connect 47 0 80 0;
+#X connect 48 0 42 0;
+#X connect 48 0 81 0;
+#X connect 49 0 44 0;
+#X connect 49 0 82 0;
+#X connect 51 0 0 0;
+#X connect 52 0 3 0;
+#X connect 53 0 10 0;
+#X connect 54 0 13 0;
+#X connect 55 0 14 0;
+#X connect 56 0 15 0;
+#X connect 57 0 19 0;
+#X connect 58 0 21 0;
+#X connect 59 0 26 0;
+#X connect 60 0 27 0;
+#X connect 61 0 31 0;
+#X connect 62 0 33 0;
+#X connect 63 0 38 0;
+#X connect 64 0 39 0;
+#X connect 65 0 43 0;
+#X connect 66 0 45 0;
+#X restore 21 -213 pd g4;
 #X connect 0 0 284 0;
 #X connect 0 0 302 0;
 #X connect 1 0 2 0;
@@ -2026,66 +2198,74 @@ them to different steps of sequencer;
 #X connect 302 0 67 0;
 #X connect 302 0 71 0;
 #X connect 302 0 74 0;
-#X connect 312 0 1 0;
-#X connect 312 0 313 0;
-#X restore 517 508 pd sequencer_matrix;
-#X text 643 508 < this is where the actual sequencer lives;
-#X text 513 459 # STEP SEQUENCER;
-#N canvas 463 171 954 580 sequencer_gates 0;
-#X obj 24 56 r gate1;
-#X obj 256 60 r gate2;
-#X obj 483 60 r gate3;
-#X obj 67 131 bng 15 50 20 0 empty empty empty 17 7 0 10 -262144 -1
--1;
-#X msg 30 98 /2 1;
-#X msg 76 198 /2 0;
-#X obj 289 128 bng 15 50 20 0 empty empty empty 17 7 0 10 -262144 -1
--1;
-#X obj 519 127 bng 15 50 20 0 empty empty empty 17 7 0 10 -262144 -1
--1;
-#X msg 252 95 /4 1;
-#X msg 298 195 /4 0;
-#X msg 528 194 /7 0;
-#X msg 482 94 /7 1;
-#X text 57 19 gather the gates from the gate sequencers;
-#X text 182 303 use the gates to turn arduino pins on and off;
-#X text 180 365 how do we send all 3 gate on or off messages at the
-same time?;
-#X obj 117 84 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
--1;
-#X obj 343 87 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
--1;
-#X obj 571 89 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
--1;
-#X obj 528 153 del 100;
-#X obj 298 154 del 100;
-#X obj 36 283 s to_osc;
-#X obj 258 280 s to_osc;
-#X obj 488 279 s to_osc;
-#X obj 76 157 del 1;
-#X connect 0 0 15 0;
+#X connect 311 0 1 0;
+#X connect 311 0 312 0;
+#X restore -20 308 pd sequencer_matrix;
+#X text 106 308 < this is where the actual sequencer lives;
+#N canvas 892 111 1231 630 sequencer_gates 0;
+#X obj 27 103 r gate1;
+#X obj 259 107 r gate2;
+#X obj 486 107 r gate3;
+#X text 25 77 gather the gates from the gate sequencers;
+#X obj 120 131 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X obj 346 134 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X obj 574 136 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X obj 42 371 makenote 127 100;
+#X obj 45 412 noteout;
+#X floatatom 327 32 5 0 0 0 - - -, f 5;
+#X text 362 31 note length;
+#X obj 275 365 makenote 127 100;
+#X obj 278 406 noteout;
+#X obj 502 366 makenote 127 100;
+#X obj 505 407 noteout;
+#X msg 41 341 36;
+#X msg 274 335 38;
+#X msg 501 336 40;
+#X msg 324 5 20;
+#X obj 325 -16 loadbang;
+#X obj 755 135 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X obj 683 365 makenote 127 100;
+#X obj 686 406 noteout;
+#X obj 667 106 r gate4;
+#X msg 682 335 41;
+#X obj 88 242 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X obj 56 268 spigot;
+#X obj 143 194 r program;
+#X obj 93 220 sel 0;
+#X connect 0 0 4 0;
+#X connect 1 0 5 0;
 #X connect 1 0 16 0;
+#X connect 2 0 6 0;
 #X connect 2 0 17 0;
-#X connect 3 0 23 0;
-#X connect 4 0 3 0;
-#X connect 4 0 20 0;
-#X connect 5 0 20 0;
-#X connect 6 0 19 0;
-#X connect 7 0 18 0;
-#X connect 8 0 6 0;
-#X connect 8 0 21 0;
-#X connect 9 0 21 0;
-#X connect 10 0 22 0;
-#X connect 11 0 7 0;
-#X connect 11 0 22 0;
-#X connect 15 0 4 0;
-#X connect 16 0 8 0;
-#X connect 17 0 11 0;
-#X connect 18 0 10 0;
-#X connect 19 0 9 0;
-#X connect 23 0 5 0;
-#X restore 516 538 pd sequencer_gates;
-#X text 635 540 < here is where the gates end up;
+#X connect 7 0 8 0;
+#X connect 7 1 8 1;
+#X connect 9 0 7 2;
+#X connect 9 0 11 2;
+#X connect 9 0 13 2;
+#X connect 9 0 21 2;
+#X connect 11 0 12 0;
+#X connect 11 1 12 1;
+#X connect 13 0 14 0;
+#X connect 13 1 14 1;
+#X connect 15 0 7 0;
+#X connect 16 0 11 0;
+#X connect 17 0 13 0;
+#X connect 18 0 9 0;
+#X connect 19 0 18 0;
+#X connect 21 0 22 0;
+#X connect 21 1 22 1;
+#X connect 23 0 20 0;
+#X connect 23 0 24 0;
+#X connect 24 0 21 0;
+#X connect 25 0 26 1;
+#X connect 28 0 25 0;
+#X restore -21 338 pd sequencer_gates;
+#X text 98 340 < here is where the gates end up;
 #N canvas 273 51 1019 757 link_linux 0;
 #X msg 365 141 tempo \$1;
 #X msg 154 142 resolution \$1;
@@ -2103,8 +2283,6 @@ same time?;
 #X floatatom 257 122 5 0 0 2 beat - -, f 5;
 #X floatatom 154 122 5 0 0 2 resolution - -, f 5;
 #X msg 77 142 connect \$1;
-#X floatatom 467 199 5 0 0 0 - - -, f 5;
-#X obj 467 177 r #abl_link_num_peers;
 #X obj 71 12 loadbang;
 #X obj 72 36 delay 1000;
 #X msg 137 76 4;
@@ -2120,30 +2298,39 @@ same time?;
 #X obj 46 396 s link_reset;
 #X obj 190 214 abl_link/external/abl_link~ 1 0 4 134;
 #X msg 469 128 60;
-#X connect 0 0 28 0;
-#X connect 1 0 28 0;
-#X connect 2 0 28 0;
+#X floatatom 572 234 5 0 0 0 - - -, f 5;
+#X obj 555 206 r #abl_link_num_peers;
+#X obj 553 324 s to_phone;
+#X msg 499 281 /bpm \$1;
+#X msg 557 281 /link_peers \$1;
+#X connect 0 0 26 0;
+#X connect 1 0 26 0;
+#X connect 2 0 26 0;
 #X connect 3 0 2 0;
 #X connect 9 0 14 0;
 #X connect 10 0 0 0;
 #X connect 11 0 3 1;
 #X connect 12 0 3 0;
 #X connect 13 0 1 0;
-#X connect 14 0 28 0;
-#X connect 16 0 15 0;
-#X connect 17 0 18 0;
-#X connect 18 0 9 0;
-#X connect 18 0 19 0;
-#X connect 18 0 6 0;
-#X connect 19 0 13 0;
-#X connect 26 0 27 0;
-#X connect 28 0 7 0;
-#X connect 28 0 26 0;
-#X connect 28 0 20 0;
-#X connect 28 1 5 0;
-#X connect 28 2 4 0;
-#X connect 28 3 8 0;
-#X connect 29 0 0 0;
+#X connect 14 0 26 0;
+#X connect 15 0 16 0;
+#X connect 16 0 9 0;
+#X connect 16 0 17 0;
+#X connect 16 0 6 0;
+#X connect 17 0 13 0;
+#X connect 24 0 25 0;
+#X connect 26 0 7 0;
+#X connect 26 0 24 0;
+#X connect 26 0 18 0;
+#X connect 26 1 5 0;
+#X connect 26 2 4 0;
+#X connect 26 3 8 0;
+#X connect 26 3 31 0;
+#X connect 27 0 0 0;
+#X connect 29 0 28 0;
+#X connect 29 0 32 0;
+#X connect 31 0 30 0;
+#X connect 32 0 30 0;
 #X restore -26 -54 pd link_linux;
 #N canvas 282 51 1019 757 link_mac 0;
 #X msg 365 141 tempo \$1;
@@ -2177,72 +2364,46 @@ same time?;
 #X text 139 36 let things settle first;
 #X obj 41 366 sel 0;
 #X obj 46 396 s link_reset;
-#X obj 190 214 abl_link~ 1 0 4 134;
 #X msg 469 128 20;
-#X connect 0 0 28 0;
-#X connect 1 0 28 0;
-#X connect 2 0 28 0;
+#X obj 465 295 s to_phone;
+#X msg 411 252 /bpm \$1;
+#X msg 469 252 /link_peers \$1;
+#X obj 190 214 abl_link~ 1 0 4 129;
+#X connect 0 0 32 0;
+#X connect 1 0 32 0;
+#X connect 2 0 32 0;
 #X connect 3 0 2 0;
 #X connect 9 0 14 0;
 #X connect 10 0 0 0;
 #X connect 11 0 3 1;
 #X connect 12 0 3 0;
 #X connect 13 0 1 0;
-#X connect 14 0 28 0;
+#X connect 14 0 32 0;
 #X connect 16 0 15 0;
+#X connect 16 0 31 0;
 #X connect 17 0 18 0;
 #X connect 18 0 9 0;
 #X connect 18 0 19 0;
 #X connect 18 0 6 0;
 #X connect 19 0 13 0;
 #X connect 26 0 27 0;
-#X connect 28 0 7 0;
-#X connect 28 0 20 0;
-#X connect 28 0 26 0;
-#X connect 28 1 5 0;
-#X connect 28 2 4 0;
-#X connect 28 3 8 0;
-#X connect 29 0 0 0;
+#X connect 28 0 0 0;
+#X connect 30 0 29 0;
+#X connect 31 0 29 0;
+#X connect 32 0 7 0;
+#X connect 32 0 20 0;
+#X connect 32 0 26 0;
+#X connect 32 1 5 0;
+#X connect 32 2 4 0;
+#X connect 32 3 8 0;
+#X connect 32 3 30 0;
 #X restore 157 -60 pd link_mac;
 #X text 31 49 show a 4-digit binary number with 4 leds;
-#X obj 483 92 pd-mrpeach/osc/packOSC;
-#X msg 306 -97 /2 1 \, /4 1 \, /7 1;
-#X msg 488 -62 /2 0 \, /4 0 \, /7 0;
-#X msg 500 -5 /2 1;
-#X msg 624 -42 devicename /dev/ttyACM0 \, baud 115200 \, pollintervall
-1;
-#X obj 875 135 o.io.slipserial;
-#X obj 204 455;
-#X obj 434 -12 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
--1 -1;
-#X obj 369 -60 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
--1 -1;
-#X obj 398 -51 del 100;
 #X obj 137 -11 r link_step;
-#X connect 0 0 31 0;
-#X connect 1 0 2 0;
-#X connect 2 0 53 0;
-#X connect 4 0 0 0;
-#X connect 5 0 6 0;
-#X connect 7 0 8 0;
-#X connect 9 0 12 0;
-#X connect 10 0 13 0;
-#X connect 11 0 14 0;
-#X connect 16 0 18 0;
-#X connect 17 0 3 0;
-#X connect 25 0 54 1;
-#X connect 31 0 32 0;
-#X connect 33 0 31 0;
-#X connect 34 0 32 1;
-#X connect 36 0 49 0;
-#X connect 49 0 26 0;
-#X connect 49 0 54 0;
-#X connect 50 0 49 0;
-#X connect 50 0 57 0;
-#X connect 51 0 49 0;
-#X connect 52 0 49 0;
-#X connect 53 0 26 1;
-#X connect 54 0 17 0;
-#X connect 56 0 51 0;
-#X connect 57 0 58 0;
-#X connect 58 0 56 0;
+#X text -24 281 # STEP SEQUENCERS;
+#X obj 328 -101 nbx 5 50 0 15 0 0 empty empty empty 0 -8 0 25 -1 -258113
+-258113 4 256;
+#X obj 329 -42 s program;
+#X obj -26 11 r program;
+#X connect 16 0 17 0;
+#X connect 18 0 0 0;

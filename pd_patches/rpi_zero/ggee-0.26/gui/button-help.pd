@@ -1,0 +1,13 @@
+#N canvas 215 105 529 408 10;
+#X obj 41 115 button OK;
+#X obj 77 249 print;
+#X obj 118 128 button Hit_me_with_your_rhythm_stick;
+#X msg 118 181 yes I will;
+#X obj 118 83 button OK;
+#X text 17 21 Button \, a bang with a label (no pics yet);
+#X text 26 374 (C) dosmildos Guenter Geiger;
+#X text 17 41 button <text> \, _ are made into spaces;
+#X connect 0 0 1 0;
+#X connect 2 0 3 0;
+#X connect 3 0 1 0;
+#X connect 4 0 2 0;

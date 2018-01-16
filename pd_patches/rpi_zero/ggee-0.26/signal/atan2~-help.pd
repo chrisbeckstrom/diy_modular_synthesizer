@@ -1,0 +1,4 @@
+#N canvas 197 203 500 184 10;
+#X obj 33 88 atan2~;
+#X text 30 121 (C) Guenter Geiger;
+#X text 30 18 The atan2 function is used to get the phase from a imaginary value of the fft.;

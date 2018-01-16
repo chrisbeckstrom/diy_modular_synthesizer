@@ -1,0 +1,7 @@
+#N canvas 231 207 452 294 10;
+#X obj 22 78 stripdir;
+#X symbolatom 22 48 0 0 0;
+#X obj 22 105 print;
+#X text 20 22 strips all leading directories from a path;
+#X connect 0 0 2 0;
+#X connect 1 0 0 0;
