@@ -88,9 +88,7 @@ echo "connecting pd's midi output to the arduino's midi input"
 aconnect $pdDev:1 $ttymidiDev:1
 
 ## arduino midi out -> pd midi in
-# TODO: need to use a different midi port for receiving midi, otherwise it loops itself for some reason
-#echo "connecting the arduino's midi output to pd's midi input"
-#aconnect $ttymidiDev:0 $pdDev:0
+aconnect $ttymidiDev:0 $pdDev:0
 
 # done!
 echo "All set!"
