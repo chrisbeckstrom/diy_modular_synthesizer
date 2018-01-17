@@ -14,9 +14,16 @@
 // midi white key notes from C1 to A1 trigger the top row of pins on the arduino
 // I use this for gate/trigger voltages to control the modular and sync to bitwig, etc.
 
+// update (later January 2018):
+// the arduino mission control module is connect to an embedded raspberry pi zero
+// the rpi runs pure data, which sends midi to mission control
+// and also receives midi from mission control (i.e. voltage -> arduino -> midi cc)
+
+
 // requirements:
 // Mozzi Arduino library
 // <https://sensorium.github.io/Mozzi/>
+// Arduino MIDI library (#include <MIDI.h>)
 
 
 // SETUP ------------------------------------------------
@@ -63,9 +70,14 @@ int pinA4midi = 0;
 int pinA5val = 0;
 int pinA5midi = 0;
 
-int pin3val = 0;
+// store incoming MIDI CC as 0-255 pwm value
+int pin3pwm = 0;
+int pin5pwm = 0;
 
-int state = 0;
+// for analog inputs a3-a5 state-change detection
+int state3 = 0;
+int state4 = 0;
+int state5 = 0;
 
 // -----------------------------------------------------------------------------
 // This function will be automatically called when a NoteOn is received.
@@ -77,6 +89,10 @@ int state = 0;
 // NOTE ON ----------------------------------------
 void handleNoteOn(byte channel, byte pitch, byte velocity)
 {
+
+    ///////////////////////////////////////////////////////////////////
+    /////////////////// MIDI NOTE -> DIGITAL PIN on/off
+    ///////////////////////////////////////////////////////////////////
     // Do whatever you want when a note is pressed.
     //Serial.print("midi note: ");
     //Serial.print(pitch);
@@ -146,6 +162,30 @@ void handleNoteOff(byte channel, byte pitch, byte velocity)
   }
 }
 
+
+// deal with incoming MIDI control change messages
+void handleControlChange(byte inChannel, byte inNumber, byte inValue)
+{
+
+    ///////////////////////////////////////////////////////////////////
+    /////////////////// MIDI CC -> ARDUINO -> PWM OUTPUT (i.e. CV)
+    ///////////////////////////////////////////////////////////////////
+
+    // MIDI CC# 12 -> pin 3 PWM
+    if (inNumber == 12) {
+      // map incoming MIDI 0-127 to 8-bit 0-255, so 0 is low, 255 is high
+      pin3pwm = map(inValue, 0, 127, 0, 255);
+      analogWrite(3, pin3pwm);
+    }
+
+    // MIDI CC# 13 -> pin 5 PWM
+    if (inNumber == 13) {
+      pin5pwm = map(inValue, 0, 127, 0, 255);
+      analogWrite(5, pin5pwm);
+    }
+    
+}
+
 // -----------------------------------------------------------------------------
 
 // **TODO** this is probably where I can add MIDI cc -> pwm functionality
@@ -154,10 +194,13 @@ void setup()
 {
     // Connect the handleNoteOn function to the library, 
     // so it is called upon reception of a NoteOn.
-    MIDI.setHandleNoteOn(handleNoteOn);  // Put only the name of the function
+    MIDI.setHandleNoteOn(handleNoteOn);
 
     // Do the same for NoteOffs
     MIDI.setHandleNoteOff(handleNoteOff);
+
+    // get ready to deal with incoming MIDI ccs
+    MIDI.setHandleControlChange(handleControlChange);
 
     // Initiate MIDI communications, listen channel 1
     MIDI.begin(1);
@@ -187,7 +230,6 @@ void setup()
     pinMode(pinA4, INPUT);
     pinMode(pinA5, INPUT);
 
-    //MIDI.begin(1);
     Serial.begin(115200); // opens serial port, sets data rate to ? bps
 }
 
@@ -195,12 +237,6 @@ void setup()
 //  I think this sends a midi message back into the computer
 //  this isn't very useful, maybe I should turn this offr
 //  or keep it around for sending midi from the modular to the computer
-
-void midiSend(char status, char data1, char data2) {
-  Serial.print(status);
-  Serial.print(data1);
-  Serial.print(data2);
-}
 
 
 void loop()
@@ -215,71 +251,78 @@ void loop()
     // I should really figure out how to do a function here
     // until then, I'll just copy-paste like a hack :-)
 
-    // I did this to experiment with sending voltages to arduino and converting to midi cc
-    // may need to deactivate for now
+    ///////////////////////////////////////////////////////////////////
+    /////////////////// VOLTAGE -> ANALOG PINS -> MIDI CC
+    ///////////////////////////////////////////////////////////////////
+    // TODO: add some sort of state detection so we only send data on a change
+    // maybe like if state 
     pinA0val = analogRead(pinA0);   // read the input pin
     pinA0midi = map(pinA0val, 0, 1023, 0, 127);
     // format:
     // midiSend(channel, control number, value)
     midiSend(0xB1, 0x72, pinA0midi);
 
-
     pinA1val = analogRead(pinA1);   // read the input pin
     pinA1midi = map(pinA1val, 0, 1023, 0, 127);
     midiSend(0xB0, 0x73, pinA1midi);
 
+    pinA2val = analogRead(pinA2);   // read the input pin
+    pinA2midi = map(pinA2val, 0, 1023, 0, 127);
+    midiSend(0xB0, 0x74, pinA2midi);
 
+    
+
+    ///////////////////////////////////////////////////////////////////
+    /////////////////// VOLTAGE -> ANALOG PINS -> MIDI NOTE
+    ///////////////////////////////////////////////////////////////////
+    // the "state" business is so we don't send a midi note on on every single tick
+    // we only want to send something when something changes
+    // not sure if this is the most efficient way to do this, but it works!
     pinA3val = analogRead(A3);
-    if (pinA3val > 1000 & state != 1) {
+    if (pinA3val > 1000 & state3 != 1) {
       noteOn(0x90, 0x1E, 0x45); // 0x1E = midi note 30
-      state = 1;
+      state3 = 1;
     }
-    if (pinA3val < 0x1E & state != 0) {
+    if (pinA3val < 0x1E & state3 != 0) {
       noteOn(0x90, 0x1E, 0x00);
-      state = 0;
+      state3 = 0;
     }
-
 
     pinA4val = analogRead(A4);
-    if (pinA4val > 1000 & state != 1) {
+    if (pinA4val > 1000 & state4 != 1) {
       noteOn(0x90, 0x1F, 0x45); // 0x1F = midi note 31
-      state = 1;
+      state4 = 1;
     }
-    if (pinA4val < 1000 & state != 0) {
+    if (pinA4val < 1000 & state4 != 0) {
       noteOn(0x90, 0x1F, 0x00);
-      state = 0;
+      state4 = 0;
     }
 
     pinA5val = analogRead(A5);
-    if (pinA5val > 1000 & state != 1) {
+    if (pinA5val > 1000 & state5 != 1) {
       noteOn(0x90, 0x20, 0x45); //
-      state = 1;
+      state5 = 1;
     }
-    if (pinA5val < 1000 & state != 0) {
+    if (pinA5val < 1000 & state5 != 0) {
       noteOn(0x90, 0x20, 0x00); // 0x20 = midi note 32
-      state = 0;
+      state5 = 0;
     }
-    // experimenting with generating voltages from MIDI ccs
-    
-//    noteOn(0x90, note, 0x45);
-//    delay(100);
-//    //Note on channel 1 (0x90), some note value (note), silent velocity (0x00):
-//    noteOn(0x90, note, 0x00);
-//    delay(100);
 
-
-   
-    
-
-    // There is no need to check if there are messages incoming
-    // if they are bound to a Callback function.
-    // The attached method will be called automatically
-    // when the corresponding message has been received.
+ 
 }
 
 
+// send midi noteOn function
 void noteOn(int cmd, int pitch, int velocity) {
   Serial.write(cmd);
   Serial.write(pitch);
   Serial.write(velocity);
 }
+
+// send midi CC function
+void midiSend(char status, char data1, char data2) {
+  Serial.print(status);
+  Serial.print(data1);
+  Serial.print(data2);
+}
+
