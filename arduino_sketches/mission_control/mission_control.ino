@@ -278,6 +278,8 @@ void loop()
     // the "state" business is so we don't send a midi note on on every single tick
     // we only want to send something when something changes
     // not sure if this is the most efficient way to do this, but it works!
+    // TODO: might want to change the threshold here... 1000 is too high to be triggered
+    // by the arduino itself. maybe we can make it lower so we can self-patch
     pinA3val = analogRead(A3);
     if (pinA3val > 1000 & state3 != 1) {
       noteOn(0x90, 0x1E, 0x45); // 0x1E = midi note 30

@@ -14,10 +14,15 @@
 # why?
 # so I can run a single script to get my pure data + arduino module running
 
+# info:
+# do `./run.sh -nogui` to run pd without a gui
+
 clear
 echo "#######################"
 echo "starting up Rpi+Arduino"
 echo "#######################"
+
+
 
 echo "killing existing ttymidi and pd sessions"
 sudo killall ttymidi
@@ -25,7 +30,7 @@ sudo killall pd
 
 # full path to the pure data file
 patch='/home/pi/diy_modular_synthesizer/pd_patches/rpi_zero/rpi.pd' # where is the pd file?
-options='-noverbose -alsamidi -rt' # pure data command line options
+options='-nogui -noverbose -alsamidi -rt' # pure data command line options
 
 # which audio devices to use? (use `pd -nogui -listdev` to see what's available)
 # TODO: arrive at these numbers programmatically the way we do with midi devices below
@@ -47,8 +52,8 @@ tmux -f /home/pi/.tmux/tmux.conf new -s ttymidi -d
 
 # start ttymidi alsa midi -> serial -> arduino bridge (in that tmux session)
 echo "starting ttymidi"
-echo "ttymidi -s $arduinoDev -v -n $arduinoName"
-tmux send-keys -t ttymidi "ttymidi -s $arduinoDev -b 9600 -v -n $arduinoName" ENTER
+echo "looking for $arduinoDev..."
+tmux send-keys -t ttymidi "ttymidi -s $arduinoDev -n $arduinoName" ENTER
 
 # create a tmux session for pure data
 tmux -f /home/pi/.tmux/tmux.conf new -s puredata -d
