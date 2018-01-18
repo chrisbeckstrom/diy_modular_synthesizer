@@ -22,8 +22,6 @@ echo "#######################"
 echo "starting up Rpi+Arduino"
 echo "#######################"
 
-
-
 echo "killing existing ttymidi and pd sessions"
 sudo killall ttymidi
 sudo killall pd
@@ -49,9 +47,10 @@ arduinoDev='/dev/ttyACM0' # i.e. '/dev/ttyACM0'
 
 # create a tmux session for ttymidi (and use custom tmux configuration file)
 tmux -f /home/pi/.tmux/tmux.conf new -s ttymidi -d
+sleep 2
 
 # start ttymidi alsa midi -> serial -> arduino bridge (in that tmux session)
-echo "starting ttymidi"
+echo "--- starting ttymidi ---"
 echo "looking for $arduinoDev..."
 tmux send-keys -t ttymidi "ttymidi -s $arduinoDev -n $arduinoName" ENTER
 
@@ -67,7 +66,7 @@ echo "midiindev: $midiin"
 echo "midioutdev: $midiout"
 echo "patch: $patch"
 
-echo "--- starting pd --"
+echo "--- starting pd ---"
 
 # start the PD patch
 tmux send-keys -t puredata "sudo pd $options -audioindev $audioin -audiooutdev $audioout -midiindev $midiin -midioutdev $midiout $patch" ENTER
@@ -90,9 +89,11 @@ echo $pdDev
 # connect midi ports
 ## pd midi out -> arduino midi in
 echo "connecting pd's midi output to the arduino's midi input"
+echo "aconnect $pdDev:1 $ttymidiDev:1"
 aconnect $pdDev:1 $ttymidiDev:1
 
 ## arduino midi out -> pd midi in
+echo "aconnect $ttymidiDev:0 $pdDev:0"
 aconnect $ttymidiDev:0 $pdDev:0
 
 # done!
