@@ -50,7 +50,15 @@ tmux -f /home/pi/.tmux/tmux.conf new -s ttymidi -d
 sleep 2
 
 # start ttymidi alsa midi -> serial -> arduino bridge (in that tmux session)
+<<<<<<< HEAD
 echo "--- starting ttymidi ---"
+=======
+<<<<<<< HEAD
+echo "--- starting ttymidi ---"
+=======
+echo "starting ttymidi"
+>>>>>>> e7a3e795571f4faeb1010411dd7e756b7ebdc49f
+>>>>>>> 35cac85902419a395de7654927b422b8c8c36616
 echo "looking for $arduinoDev..."
 tmux send-keys -t ttymidi "ttymidi -s $arduinoDev -n $arduinoName" ENTER
 
