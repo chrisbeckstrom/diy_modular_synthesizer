@@ -14,6 +14,9 @@
 # why?
 # so I can run a single script to get my pure data + arduino module running
 
+# info:
+# do `./run.sh -nogui` to run pd without a gui
+
 clear
 echo "#######################"
 echo "starting up Rpi+Arduino"
@@ -25,7 +28,7 @@ sudo killall pd
 
 # full path to the pure data file
 patch='/home/pi/diy_modular_synthesizer/pd_patches/rpi_zero/rpi.pd' # where is the pd file?
-options='-noverbose -alsamidi -rt' # pure data command line options
+options='-nogui -noverbose -alsamidi -rt' # pure data command line options
 
 # which audio devices to use? (use `pd -nogui -listdev` to see what's available)
 # TODO: arrive at these numbers programmatically the way we do with midi devices below
@@ -44,11 +47,12 @@ arduinoDev='/dev/ttyACM0' # i.e. '/dev/ttyACM0'
 
 # create a tmux session for ttymidi (and use custom tmux configuration file)
 tmux -f /home/pi/.tmux/tmux.conf new -s ttymidi -d
+sleep 2
 
 # start ttymidi alsa midi -> serial -> arduino bridge (in that tmux session)
-echo "starting ttymidi"
-echo "ttymidi -s $arduinoDev -v -n $arduinoName"
-tmux send-keys -t ttymidi "ttymidi -s $arduinoDev -b 9600 -v -n $arduinoName" ENTER
+echo "--- starting ttymidi ---"
+echo "looking for $arduinoDev..."
+tmux send-keys -t ttymidi "ttymidi -s $arduinoDev -n $arduinoName" ENTER
 
 # create a tmux session for pure data
 tmux -f /home/pi/.tmux/tmux.conf new -s puredata -d
@@ -62,7 +66,7 @@ echo "midiindev: $midiin"
 echo "midioutdev: $midiout"
 echo "patch: $patch"
 
-echo "--- starting pd --"
+echo "--- starting pd ---"
 
 # start the PD patch
 tmux send-keys -t puredata "sudo pd $options -audioindev $audioin -audiooutdev $audioout -midiindev $midiin -midioutdev $midiout $patch" ENTER
@@ -85,9 +89,11 @@ echo $pdDev
 # connect midi ports
 ## pd midi out -> arduino midi in
 echo "connecting pd's midi output to the arduino's midi input"
+echo "aconnect $pdDev:1 $ttymidiDev:1"
 aconnect $pdDev:1 $ttymidiDev:1
 
 ## arduino midi out -> pd midi in
+echo "aconnect $ttymidiDev:0 $pdDev:0"
 aconnect $ttymidiDev:0 $pdDev:0
 
 # done!
