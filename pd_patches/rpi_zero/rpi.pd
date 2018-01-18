@@ -1,12 +1,16 @@
+<<<<<<< HEAD
 #N canvas 425 51 1003 818 10;
+=======
+#N canvas 277 51 1003 818 10;
+>>>>>>> e7a3e795571f4faeb1010411dd7e756b7ebdc49f
 #N canvas 807 165 947 692 4leds 0;
 #X obj 100 210 dec_to_binary;
 #X floatatom 156 87 5 0 15 0 - - -, f 5;
-#X obj 100 240 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 100 240 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 130 240 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
-#X obj 163 240 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+#X obj 163 240 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
 #X obj 192 240 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
@@ -63,14 +67,18 @@ that in 4 bit binary (0-15);
 -1 -1;
 #X obj 510 62 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
 -1;
+<<<<<<< HEAD
 #X obj 641 68 r send16ths;
+=======
+#X obj 627 76 r send16ths;
+>>>>>>> e7a3e795571f4faeb1010411dd7e756b7ebdc49f
 #X obj 617 104 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 503 127 spigot;
 #X obj 588 205 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
 -1 -1;
 #X obj 318 88 r sendReset;
-#X obj 311 126 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 311 126 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 250 159 spigot;
 #X obj 335 237 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
@@ -157,12 +165,12 @@ that in 4 bit binary (0-15);
 #X obj 487 78 r link_step;
 #X msg 487 102 /seq/step \$1;
 #X obj 534 558 pd-mrpeach/osc/routeOSC /clock/send16ths;
-#X obj 534 588 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 534 588 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 534 613 s send16ths;
 #X msg 475 498 /clock/send16ths 1;
 #X obj 477 470 loadbang;
-#X obj 890 585 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 890 585 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 833 467 loadbang;
 #X msg 831 495 /clock/sendReset 1;
@@ -232,7 +240,11 @@ that in 4 bit binary (0-15);
 #N canvas 0 51 1418 827 sequencer_matrix 0;
 #X obj 544 -321 float;
 #X obj 551 2 hradio 16 1 0 16 empty empty empty 0 -8 0 10 -262144 -1
+<<<<<<< HEAD
 -1 6;
+=======
+-1 11;
+>>>>>>> e7a3e795571f4faeb1010411dd7e756b7ebdc49f
 #X obj 551 28 select 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15;
 #X obj 181 162 spigot;
 #X obj 204 103 r g1s1;
@@ -1327,7 +1339,7 @@ the 4 main voices;
 #X obj 188 -287 s g1s2;
 #X obj 252 -312 routeOSC /1;
 #X obj 253 -282 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1
-0 1;
+1 1;
 #X obj 250 -336 routeOSC /3;
 #X obj 279 -284 s g1s3;
 #X obj 336 -312 routeOSC /1;
@@ -1344,9 +1356,9 @@ the 4 main voices;
 #X obj 68 -163 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 162 -169 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1
-0 1;
+1 1;
 #X obj 253 -166 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1
-0 1;
+1 1;
 #X obj 250 -220 routeOSC /3;
 #X obj 337 -166 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1
 1 1;
@@ -1367,12 +1379,12 @@ the 4 main voices;
 #X obj 163 -100 routeOSC /2;
 #X obj 72 -40 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
-#X obj 166 -46 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 166 -46 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
-#X obj 257 -43 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 257 -43 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 254 -97 routeOSC /3;
-#X obj 341 -43 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 341 -43 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 70 -125 r g1;
 #X obj 162 -126 r g1;
@@ -1391,7 +1403,7 @@ the 4 main voices;
 #X obj 163 19 routeOSC /2;
 #X obj 72 79 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1 1
 ;
-#X obj 166 73 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 166 73 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 257 76 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
@@ -1493,7 +1505,7 @@ them to different steps of sequencer;
 0 1;
 #X obj 252 -312 routeOSC /1;
 #X obj 253 -282 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1
-0 1;
+1 1;
 #X obj 250 -336 routeOSC /3;
 #X obj 336 -312 routeOSC /1;
 #X obj 337 -282 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1
@@ -1506,7 +1518,7 @@ them to different steps of sequencer;
 #X obj 162 -169 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1
 0 1;
 #X obj 253 -166 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1
-0 1;
+1 1;
 #X obj 250 -220 routeOSC /3;
 #X obj 337 -166 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1
 0 1;
@@ -1537,7 +1549,7 @@ them to different steps of sequencer;
 ;
 #X obj 166 73 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
-#X obj 257 76 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 257 76 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 254 22 routeOSC /3;
 #X obj 341 76 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
@@ -1654,7 +1666,7 @@ them to different steps of sequencer;
 #X text 14 -297 row;
 #X obj 159 -339 routeOSC /2;
 #X text 13 -338 columns;
-#X obj 68 -279 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 68 -279 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 161 -315 routeOSC /1;
 #X obj 162 -285 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1
@@ -1685,7 +1697,7 @@ them to different steps of sequencer;
 #X obj 336 -196 routeOSC /2;
 #X obj 72 -96 routeOSC /1;
 #X obj 163 -100 routeOSC /2;
-#X obj 72 -40 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 72 -40 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 166 -46 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
@@ -1851,7 +1863,7 @@ them to different steps of sequencer;
 #X obj 336 -196 routeOSC /2;
 #X obj 72 -96 routeOSC /1;
 #X obj 163 -100 routeOSC /2;
-#X obj 72 -40 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 72 -40 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 166 -46 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
@@ -2275,7 +2287,11 @@ them to different steps of sequencer;
 #X connect 311 0 312 0;
 #X restore 62 268 pd sequencer_matrix;
 #X text 188 268 < this is where the actual sequencer lives;
+<<<<<<< HEAD
 #N canvas 331 125 1231 630 sequencer_gates 0;
+=======
+#N canvas 586 51 1231 630 sequencer_gates 0;
+>>>>>>> e7a3e795571f4faeb1010411dd7e756b7ebdc49f
 #X obj 27 103 r gate1;
 #X obj 259 107 r gate2;
 #X obj 486 107 r gate3;
@@ -2518,6 +2534,52 @@ them to different steps of sequencer;
 #X obj 49 -8 r program;
 #X obj 377 -86 pd-mrpeach/osc/routeOSC /program;
 #X obj 504 -6 int;
+<<<<<<< HEAD
+=======
+#N canvas 312 95 1068 739 analog_inputs 0;
+#X obj 805 119 snapshot~;
+#X obj 911 52 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X obj 805 144 + 1;
+#X obj 806 171 * 63;
+#X obj 804 196 int;
+#X floatatom 813 221 5 0 0 0 - - -, f 5;
+#X text 738 26 simulate analog input for testing;
+#X obj 828 77 metro 3;
+#X obj 738 64 osc~ 0.5;
+#X obj 58 104 s a0;
+#X obj 58 43 ctlin 50 16;
+#X obj 172 42 ctlin 51 16;
+#X obj 172 103 s a1;
+#X obj 277 42 ctlin 52 16;
+#X obj 277 103 s a2;
+#X obj 33 235 notein;
+#X obj 41 291 sel 30;
+#X obj 39 331 s a3;
+#X obj 114 291 sel 31;
+#X obj 112 331 s a4;
+#X obj 168 291 sel 32;
+#X obj 166 331 s a5;
+#X text 28 213 trigger inputs from analog inputs a3-15;
+#X text 68 18 midi ccs from analog inputs a0-a2;
+#X connect 0 0 2 0;
+#X connect 1 0 7 0;
+#X connect 2 0 3 0;
+#X connect 3 0 4 0;
+#X connect 4 0 5 0;
+#X connect 7 0 0 0;
+#X connect 8 0 0 0;
+#X connect 10 0 9 0;
+#X connect 11 0 12 0;
+#X connect 13 0 14 0;
+#X connect 15 0 16 0;
+#X connect 15 0 18 0;
+#X connect 15 0 20 0;
+#X connect 16 0 17 0;
+#X connect 18 0 19 0;
+#X connect 20 0 21 0;
+#X restore 178 -106 pd analog_inputs;
+>>>>>>> e7a3e795571f4faeb1010411dd7e756b7ebdc49f
 #X obj 377 -113 r from_osc;
 #N canvas 0 51 1160 723 vco 0;
 #X obj 643 660 dac~;
@@ -17304,6 +17366,7 @@ A0;
 #X connect 36 0 20 0;
 #X connect 37 0 20 0;
 #X connect 38 0 17 0;
+<<<<<<< HEAD
 #X connect 39 0 42 0;
 #X connect 40 0 4 0;
 #X connect 41 0 46 0;
@@ -17451,10 +17514,41 @@ A0;
 #X connect 8 0 1 0;
 #X restore 586 386 pd drums;
 #X obj 585 360 drum_voices;
+=======
+#X restore 727 610 pd sampler;
+#N canvas 203 425 664 300 cv_out 0;
+#X obj 29 149 ctlout 12;
+#X text 25 169 ~3;
+#X obj 112 149 ctlout 13;
+#X text 109 169 ~5;
+#X text 187 169 ~6;
+#X obj 191 149 ctlout 14;
+#X obj 271 150 ctlout 15;
+#X obj 354 150 ctlout 16;
+#X obj 433 150 ctlout 17;
+#X text 267 170 ~9;
+#X text 351 170 ~10;
+#X text 429 170 ~11;
+#X obj 174 75 random 127;
+#X obj 100 38 r a3;
+#X obj 78 79 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
+-1;
+#X connect 12 0 0 0;
+#X connect 13 0 14 0;
+#X connect 13 0 12 0;
+#X restore 634 429 pd cv_out;
+#X obj 645 -73 loadbang;
+>>>>>>> e7a3e795571f4faeb1010411dd7e756b7ebdc49f
 #X connect 14 0 0 0;
 #X connect 16 0 17 0;
 #X connect 19 0 20 0;
 #X connect 20 0 16 0;
+<<<<<<< HEAD
 #X connect 21 0 19 0;
 #X connect 24 0 16 0;
 #X connect 28 0 24 0;
+=======
+#X connect 22 0 19 0;
+#X connect 25 0 16 0;
+#X connect 30 0 25 0;
+>>>>>>> e7a3e795571f4faeb1010411dd7e756b7ebdc49f
