@@ -28,7 +28,7 @@ sudo killall pd
 
 # full path to the pure data file
 patch='/home/pi/diy_modular_synthesizer/pd_patches/rpi_zero/rpi.pd' # where is the pd file?
-options='-nogui -noverbose -alsamidi -rt' # pure data command line options
+options='-noverbose -alsamidi -rt' # pure data command line options
 
 # which audio devices to use? (use `pd -nogui -listdev` to see what's available)
 # TODO: arrive at these numbers programmatically the way we do with midi devices below
@@ -50,15 +50,7 @@ tmux -f /home/pi/.tmux/tmux.conf new -s ttymidi -d
 sleep 2
 
 # start ttymidi alsa midi -> serial -> arduino bridge (in that tmux session)
-<<<<<<< HEAD
 echo "--- starting ttymidi ---"
-=======
-<<<<<<< HEAD
-echo "--- starting ttymidi ---"
-=======
-echo "starting ttymidi"
->>>>>>> e7a3e795571f4faeb1010411dd7e756b7ebdc49f
->>>>>>> 35cac85902419a395de7654927b422b8c8c36616
 echo "looking for $arduinoDev..."
 tmux send-keys -t ttymidi "ttymidi -s $arduinoDev -n $arduinoName" ENTER
 
