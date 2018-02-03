@@ -1,26 +1,35 @@
-#N canvas 555 23 685 676 10;
+#N canvas 0 23 927 393 10;
 #X obj 63 21 notein;
 #X floatatom 24 52 5 0 0 0 - - -, f 5;
 #X floatatom 93 52 5 0 0 0 - - -, f 5;
 #X floatatom 132 52 5 0 0 0 - - -, f 5;
-#X obj 38 240 sel 36;
-#X obj 38 276 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
+#X obj 24 81 sel 36;
+#X obj 24 117 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
 -1;
-#X obj 86 276 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
+#X obj 72 117 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
 -1;
-#X obj 86 240 sel 38;
-#X obj 133 276 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+#X obj 72 81 sel 38;
+#X obj 119 117 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
 -1 -1;
-#X obj 133 240 sel 40;
-#X obj 185 276 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+#X obj 119 81 sel 40;
+#X obj 171 117 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
 -1 -1;
-#X obj 185 240 sel 41;
-#X obj 237 276 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+#X obj 171 81 sel 41;
+#X obj 223 117 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
 -1 -1;
-#X obj 237 240 sel 43;
-#X obj 288 276 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+#X obj 223 81 sel 43;
+#X obj 274 117 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
 -1 -1;
-#X obj 288 240 sel 45;
+#X obj 274 81 sel 45;
+#X obj 378 350 udpsend;
+#X msg 367 16 connect 127.0.0.1 3003;
+#X obj 74 218 packOSC;
+#X msg 29 182 send /gates/gate1 1;
+#X msg 513 15 connect 10.0.0.10 3003;
+#X msg 475 304 disconnect;
+#X text 523 139 run this on a computer where you are generating midi
+notes;
+#X text 522 158 send osc messages to rpi in modular;
 #X connect 0 0 1 0;
 #X connect 0 0 4 0;
 #X connect 0 0 7 0;
@@ -36,3 +45,8 @@
 #X connect 11 0 10 0;
 #X connect 13 0 12 0;
 #X connect 15 0 14 0;
+#X connect 17 0 16 0;
+#X connect 18 0 16 0;
+#X connect 19 0 18 0;
+#X connect 20 0 16 0;
+#X connect 21 0 16 0;
