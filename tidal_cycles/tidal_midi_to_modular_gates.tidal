@@ -1,0 +1,40 @@
+-- TIDAL MIDI -> MODULAR GATES
+-- Chris Beckstrom 2018-02-03
+
+-- sequence mission control on the modular
+-- using tidalcycles running on laptop
+-- tidal MIDI -> IAC Driver
+-- IAC driver -> pure data
+-- pure data - generate osc messages
+-- osc -> rpi pure data
+-- rpi pure data generate MIDI messages
+-- rpi midi -> arduino mission control
+
+-- STARTUP
+-- evaluate each of these first:
+import Sound.Tidal.MIDI.Context
+
+devices <- midiDevices
+
+m1 <- midiStream devices "IAC Driver Bus 1" 1 synthController
+
+-- reference
+-- mission control setup
+-- 36	 38	 40	 41	 43	 45 	<-- arduino pins
+-- 2	 4	 7	 8	 12	 13	<-- MIDI numbers that trigger them
+
+-- MAKE MIDI BELOW
+-----------------------
+
+-- tempo
+bps (130/60)
+
+-- stack
+m1 $ stack [
+midinote "[36]",
+midinote "[38]*2",
+midinote "[~ 40]",
+midinote "[~ 41]/2",
+midinote "[43]/4",
+midinote "[45*4]"
+]
