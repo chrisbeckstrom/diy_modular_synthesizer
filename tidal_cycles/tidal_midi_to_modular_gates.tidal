@@ -10,6 +10,10 @@
 -- rpi pure data generate MIDI messages
 -- rpi midi -> arduino mission control
 
+-- use the pd file:
+-- tidal_midi_to_pd_to_osc.pd
+-- to convert midi messages generated in tidal to osc messages
+
 -- STARTUP
 -- evaluate each of these first:
 import Sound.Tidal.MIDI.Context
