@@ -1,14 +1,14 @@
-#N canvas -19 44 1006 623 10;
+#N canvas 0 44 1006 623 10;
 #N canvas 807 165 947 692 4leds 0;
 #X obj 100 210 dec_to_binary;
 #X floatatom 156 87 5 0 15 0 - - -, f 5;
-#X obj 100 240 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 100 240 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
-#X obj 130 240 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+#X obj 130 240 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
-#X obj 163 240 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+#X obj 163 240 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
-#X obj 192 240 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+#X obj 192 240 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
 #X obj 95 53 inlet;
 #X text 138 29 send a number in the inlet and the 4 leds will display
@@ -232,7 +232,7 @@ that in 4 bit binary (0-15);
 #N canvas 0 51 1418 827 sequencer_matrix 0;
 #X obj 544 -321 float;
 #X obj 551 2 hradio 16 1 0 16 empty empty empty 0 -8 0 10 -262144 -1
--1 14;
+-1 1;
 #X obj 551 28 select 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15;
 #X obj 181 162 spigot;
 #X obj 204 103 r g1s1;
@@ -2300,7 +2300,7 @@ them to different steps of sequencer;
 #X obj 734 680 noteout;
 #X obj 667 106 r gate4;
 #X msg 730 609 41;
-#X obj 103 263 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 103 263 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 71 289 spigot;
 #X obj 108 216 r program;
@@ -2309,17 +2309,17 @@ them to different steps of sequencer;
 #X obj 553 681 noteout;
 #X obj 90 645 makenote 127 100;
 #X text 362 31 note length (ms);
-#X obj 310 264 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 310 264 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 278 290 spigot;
 #X obj 315 217 r program;
 #X obj 315 242 sel 0;
-#X obj 528 267 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 528 267 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 496 293 spigot;
 #X obj 533 220 r program;
 #X obj 533 245 sel 0;
-#X obj 717 258 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 717 258 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 685 284 spigot;
 #X obj 722 211 r program;
@@ -2564,7 +2564,7 @@ them to different steps of sequencer;
 #X obj 132 -8 r link_step;
 #X text 58 241 # STEP SEQUENCERS;
 #X obj 452 34 nbx 5 50 0 15 0 0 empty empty empty 0 -8 0 25 -1 -258113
--258113 2 256;
+-258113 0 256;
 #X obj 455 109 s program;
 #X obj 49 -8 r program;
 #X obj 377 -86 pd-mrpeach/osc/routeOSC /program;
@@ -15019,8 +15019,8 @@ A0;
 #X connect 13 0 12 0;
 #X restore 634 429 pd cv_out;
 #X obj 645 -73 loadbang;
-#N canvas 947 182 541 606 drums 0;
-#X obj 354 379 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+#N canvas 947 182 541 606 drums 1;
+#X obj 354 379 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
 #X obj 359 332 r program;
 #X obj 359 357 sel 2;
@@ -15043,10 +15043,10 @@ A0;
 #X msg 85 171 read -resize samples/Roland_TR-808/TR-808Kick04.wav bd
 ;
 #X obj 84 123 loadbang;
-#X obj 53 342 r a3;
-#X text 88 341 << trigger;
+#X text 105 341 << trigger;
 #X obj 24 343 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
 -1;
+#X obj 53 342 r gate1;
 #X connect 0 0 4 1;
 #X connect 1 0 2 0;
 #X connect 2 0 0 0;
@@ -15061,7 +15061,7 @@ A0;
 #X connect 15 0 12 0;
 #X connect 16 0 6 0;
 #X connect 17 0 16 0;
-#X connect 18 0 15 0;
+#X connect 19 0 15 0;
 #X connect 20 0 15 0;
 #X restore 534 299 pd drums;
 #X connect 14 0 0 0;
