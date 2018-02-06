@@ -1,4 +1,4 @@
-#N canvas 20 113 1006 623 10;
+#N canvas -19 44 1006 623 10;
 #N canvas 807 165 947 692 4leds 0;
 #X obj 100 210 dec_to_binary;
 #X floatatom 156 87 5 0 15 0 - - -, f 5;
@@ -6,9 +6,9 @@
 1;
 #X obj 130 240 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
-#X obj 163 240 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 163 240 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
-#X obj 192 240 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 192 240 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 95 53 inlet;
 #X text 138 29 send a number in the inlet and the 4 leds will display
@@ -232,7 +232,7 @@ that in 4 bit binary (0-15);
 #N canvas 0 51 1418 827 sequencer_matrix 0;
 #X obj 544 -321 float;
 #X obj 551 2 hradio 16 1 0 16 empty empty empty 0 -8 0 10 -262144 -1
--1 2;
+-1 14;
 #X obj 551 28 select 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15;
 #X obj 181 162 spigot;
 #X obj 204 103 r g1s1;
@@ -2275,7 +2275,7 @@ them to different steps of sequencer;
 #X connect 311 0 312 0;
 #X restore 62 268 pd sequencer_matrix;
 #X text 188 268 < this is where the actual sequencer lives;
-#N canvas -22 23 1404 848 sequencer_gates 1;
+#N canvas 0 23 1404 848 sequencer_gates 0;
 #X obj 27 103 r gate1;
 #X obj 259 107 r gate2;
 #X obj 486 107 r gate3;
@@ -2300,7 +2300,7 @@ them to different steps of sequencer;
 #X obj 734 680 noteout;
 #X obj 667 106 r gate4;
 #X msg 730 609 41;
-#X obj 103 263 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+#X obj 103 263 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
 #X obj 71 289 spigot;
 #X obj 108 216 r program;
@@ -2309,17 +2309,17 @@ them to different steps of sequencer;
 #X obj 553 681 noteout;
 #X obj 90 645 makenote 127 100;
 #X text 362 31 note length (ms);
-#X obj 310 264 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+#X obj 310 264 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
 #X obj 278 290 spigot;
 #X obj 315 217 r program;
 #X obj 315 242 sel 0;
-#X obj 528 267 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+#X obj 528 267 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
 #X obj 496 293 spigot;
 #X obj 533 220 r program;
 #X obj 533 245 sel 0;
-#X obj 717 258 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+#X obj 717 258 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
 #X obj 685 284 spigot;
 #X obj 722 211 r program;
@@ -2564,12 +2564,12 @@ them to different steps of sequencer;
 #X obj 132 -8 r link_step;
 #X text 58 241 # STEP SEQUENCERS;
 #X obj 452 34 nbx 5 50 0 15 0 0 empty empty empty 0 -8 0 25 -1 -258113
--258113 0 256;
+-258113 2 256;
 #X obj 455 109 s program;
 #X obj 49 -8 r program;
 #X obj 377 -86 pd-mrpeach/osc/routeOSC /program;
 #X obj 504 -6 int;
-#N canvas 312 95 1068 739 analog_inputs 0;
+#N canvas 124 23 970 404 analog_inputs 1;
 #X obj 805 119 snapshot~;
 #X obj 911 52 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
@@ -2655,7 +2655,7 @@ A0;
 #X text 662 -37 gate sequencer -> midi notes;
 #X obj 695 146 r from_osc;
 #N canvas 50 51 1259 785 sampler 0;
-#X obj 573 665 dac~;
+#X obj 584 766 dac~;
 #N canvas 0 50 450 278 (subpatch) 0;
 #X array sampler 88200 float 3;
 #A 0 -0.0291757 -0.0809045 -0.060976 -0.0669881 -0.0267647 -0.00238044
@@ -14964,7 +14964,6 @@ A0;
 #X connect 2 1 3 0;
 #X connect 4 0 3 0;
 #X connect 4 0 30 0;
-#X connect 5 0 0 0;
 #X connect 7 0 5 0;
 #X connect 8 0 7 1;
 #X connect 10 0 19 0;
@@ -14997,7 +14996,7 @@ A0;
 #X connect 36 0 20 0;
 #X connect 37 0 20 0;
 #X connect 38 0 17 0;
-#X restore 727 610 pd sampler;
+#X restore 716 425 pd sampler;
 #N canvas 203 425 664 300 cv_out 0;
 #X obj 29 149 ctlout 12;
 #X text 25 169 ~3;
@@ -15020,6 +15019,51 @@ A0;
 #X connect 13 0 12 0;
 #X restore 634 429 pd cv_out;
 #X obj 645 -73 loadbang;
+#N canvas 947 182 541 606 drums 0;
+#X obj 354 379 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+1;
+#X obj 359 332 r program;
+#X obj 359 357 sel 2;
+#X obj 316 500 dac~;
+#X obj 322 405 *~;
+#X text 132 5 synthesize/sample some drum sounds;
+#X obj 83 201 soundfiler;
+#N canvas 0 22 450 278 (subpatch) 0;
+#X array bd 25016 float 2;
+#X coords 0 1 25016 -1 200 140 1 0 0;
+#X restore 239 23 graph;
+#X floatatom 159 238 20 0 0 0 - - -, f 20;
+#X floatatom 27 290 5 0 0 0 - - -, f 5;
+#X obj 55 449 tabread4~ bd;
+#X obj 27 266 expr 44100 / $f1;
+#X obj 57 421 line~;
+#X obj 160 263 expr $f1 / 44100;
+#X floatatom 164 291 5 0 0 0 - - -, f 5;
+#X msg 56 394 1 \, 661000 19000;
+#X msg 85 171 read -resize samples/Roland_TR-808/TR-808Kick04.wav bd
+;
+#X obj 84 123 loadbang;
+#X obj 53 342 r a3;
+#X text 88 341 << trigger;
+#X obj 24 343 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
+-1;
+#X connect 0 0 4 1;
+#X connect 1 0 2 0;
+#X connect 2 0 0 0;
+#X connect 4 0 3 0;
+#X connect 6 0 8 0;
+#X connect 6 0 11 0;
+#X connect 6 0 13 0;
+#X connect 10 0 4 0;
+#X connect 11 0 9 0;
+#X connect 12 0 10 0;
+#X connect 13 0 14 0;
+#X connect 15 0 12 0;
+#X connect 16 0 6 0;
+#X connect 17 0 16 0;
+#X connect 18 0 15 0;
+#X connect 20 0 15 0;
+#X restore 534 299 pd drums;
 #X connect 14 0 0 0;
 #X connect 16 0 17 0;
 #X connect 19 0 20 0;

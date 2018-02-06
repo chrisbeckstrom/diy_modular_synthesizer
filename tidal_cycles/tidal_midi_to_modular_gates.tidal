@@ -35,10 +35,7 @@ bps (130/60)
 
 -- stack
 m1 $ stack [
-midinote "[36]",
-midinote "[38]*2",
-midinote "[~ 40]",
-midinote "[~ 41]/2",
-midinote "[43]/4",
-midinote "[45*4]"
+midinote "[36]"
 ]
+
+m1 $ silence
