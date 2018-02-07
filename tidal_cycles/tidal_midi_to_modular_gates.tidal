@@ -34,8 +34,18 @@ m1 <- midiStream devices "IAC Driver Bus 1" 1 synthController
 bps (130/60)
 
 -- stack
-m1 $ stack [
-midinote "[36]"
+m1 $ whenmod 8 7 (sometimes (scramble 8)) $
+sometimesBy 0.1 (stut 2 1 0.5) $
+stack [
+midinote "[36*8?]" # velocity 1,
+midinote "[~ 38]" # velocity 1,
+sometimesBy 0.05 (fast 2)  $ midinote "[40*8]" # velocity 1
+]
+
+m1 $ fast 2 $ stack [
+midinote "[36*2]" # velocity 1,
+midinote "[40*4]" # velocity 1,
+midinote "[~ 38]/2" # velocity 1
 ]
 
 m1 $ silence

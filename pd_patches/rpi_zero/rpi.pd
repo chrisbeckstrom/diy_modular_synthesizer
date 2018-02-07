@@ -1,14 +1,14 @@
 #N canvas 0 23 938 618 10;
-#N canvas 807 165 947 692 4leds 0;
+#N canvas 700 87 947 692 4leds 0;
 #X obj 100 210 dec_to_binary;
 #X floatatom 156 87 5 0 15 0 - - -, f 5;
-#X obj 100 240 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+#X obj 100 240 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
 #X obj 130 240 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
-#X obj 163 240 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+#X obj 163 240 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
-#X obj 192 240 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+#X obj 192 240 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
 #X obj 95 53 inlet;
 #X text 138 29 send a number in the inlet and the 4 leds will display
@@ -96,7 +96,7 @@ that in 4 bit binary (0-15);
 #X connect 19 0 5 0;
 #X connect 19 1 5 1;
 #X restore 62 112 pd 16ths;
-#N canvas 0 51 450 300 reset 0;
+#N canvas 0 51 527 416 reset 0;
 #X obj 121 200 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
 -1 -1;
 #X obj 220 83 r link_step;
@@ -217,7 +217,6 @@ that in 4 bit binary (0-15);
 #X connect 30 0 19 0;
 #X connect 30 0 28 0;
 #X connect 31 0 32 0;
-#X connect 32 0 22 0;
 #X connect 33 0 34 0;
 #X connect 34 0 35 0;
 #X connect 36 0 34 0;
@@ -240,7 +239,7 @@ that in 4 bit binary (0-15);
 #N canvas 0 51 1418 827 sequencer_matrix 0;
 #X obj 544 -321 float;
 #X obj 551 2 hradio 16 1 0 16 empty empty empty 0 -8 0 10 -262144 -1
--1 13;
+-1 1;
 #X obj 551 28 select 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15;
 #X obj 181 162 spigot;
 #X obj 204 103 r g1s1;
@@ -2283,7 +2282,7 @@ them to different steps of sequencer;
 #X connect 311 0 312 0;
 #X restore 62 268 pd sequencer_matrix;
 #X text 188 268 < this is where the actual sequencer lives;
-#N canvas 518 23 1291 851 sequencer_gates 0;
+#N canvas 132 23 1291 851 sequencer_gates 1;
 #X obj 27 103 r gate1;
 #X obj 259 107 r gate2;
 #X obj 486 107 r gate3;
@@ -2445,7 +2444,6 @@ trigger each of the 6 gates/trigs, f 30;
 #X connect 49 1 48 0;
 #X connect 49 1 56 0;
 #X connect 50 0 58 0;
-#X connect 51 0 49 0;
 #X connect 53 0 59 0;
 #X connect 53 1 60 0;
 #X connect 55 0 50 0;
@@ -15130,8 +15128,8 @@ A0;
 #X connect 19 0 15 0;
 #X connect 20 0 15 0;
 #X restore 534 299 pd drums;
-#X connect 14 0 0 0;
 #X connect 16 0 17 0;
+#X connect 18 0 0 0;
 #X connect 19 0 20 0;
 #X connect 20 0 16 0;
 #X connect 22 0 19 0;
