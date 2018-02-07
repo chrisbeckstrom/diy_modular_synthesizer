@@ -4,7 +4,7 @@
 #X floatatom 156 87 5 0 15 0 - - -, f 5;
 #X obj 100 240 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
-#X obj 130 240 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+#X obj 130 240 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
 #X obj 163 240 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
@@ -240,7 +240,7 @@ that in 4 bit binary (0-15);
 #N canvas 0 51 1418 827 sequencer_matrix 0;
 #X obj 544 -321 float;
 #X obj 551 2 hradio 16 1 0 16 empty empty empty 0 -8 0 10 -262144 -1
--1 15;
+-1 13;
 #X obj 551 28 select 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15;
 #X obj 181 162 spigot;
 #X obj 204 103 r g1s1;
@@ -2344,7 +2344,7 @@ them to different steps of sequencer;
 #X obj -193 69 unpack f f f;
 #X obj -54 473 sel 36;
 #X obj -230 0 r osc_remote;
-#X obj -187 31 print osc_remote;
+#X obj -160 33 print osc_remote;
 #X obj 8 473 sel 127;
 #X obj -200 138 s notes;
 #X obj -53 447 r notes;
@@ -2446,7 +2446,6 @@ trigger each of the 6 gates/trigs, f 30;
 #X connect 49 1 56 0;
 #X connect 50 0 58 0;
 #X connect 51 0 49 0;
-#X connect 51 0 52 0;
 #X connect 53 0 59 0;
 #X connect 53 1 60 0;
 #X connect 55 0 50 0;
