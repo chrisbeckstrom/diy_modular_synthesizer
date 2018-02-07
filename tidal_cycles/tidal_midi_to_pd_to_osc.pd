@@ -1,4 +1,4 @@
-#N canvas 680 23 877 633 10;
+#N canvas 141 23 1116 643 10;
 #X obj 63 21 notein;
 #X obj 24 81 sel 36;
 #X obj 72 81 sel 38;
@@ -23,7 +23,7 @@ notes;
 #X obj 90 329 pd-mrpeach/osc/packOSC;
 #X obj 413 52 loadbang;
 #X obj 413 75 del 1000;
-#X obj 332 408 /Users/chris/nextcloud/diy_modular_synthesizer/pd_patches/rpi_zero/mac_externals/mrpeach/udpsend
+#X obj 306 384 /Users/chris/nextcloud/diy_modular_synthesizer/pd_patches/rpi_zero/mac_externals/mrpeach/udpsend
 ;
 #X connect 0 0 1 0;
 #X connect 0 0 2 0;
