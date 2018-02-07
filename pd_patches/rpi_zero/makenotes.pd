@@ -1,4 +1,4 @@
-#N canvas 88 23 1342 735 10;
+#N canvas 61 23 1342 735 10;
 #X obj 601 34 udpreceive 3003;
 #X obj 634 105 routeOSC /midi/iac_driver_bus_1/0/1/note_on;
 #X obj 752 198 unpack f f;
