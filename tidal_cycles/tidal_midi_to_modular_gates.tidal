@@ -31,21 +31,71 @@ m1 <- midiStream devices "IAC Driver Bus 1" 1 synthController
 -----------------------
 
 -- tempo
-bps (130/60)
+bps (100/30)
 
--- stack
+--
+let bd = "[36]"
+    hh = "[38]"
+    sd = "[40]"
+    m = midinote
+    everything = "fast 2"
+
+
+do -- play everything
+  m1 $ fast 2 $ stack [
+    m bd,
+    m hh,
+    m sd
+    ]
+
+hush
+
+m1 $ silence
+
+
+
+
+
+
+
+
+--
+
+m1 $ silence
+
+-- drums intro
+m1 $ stack [
+sometimesBy (0.2) (fast 2) $ midinote "[36]",
+midinote "[~ 38]/2"
+]
+
+-- wild and fast
 m1 $ whenmod 8 7 (sometimes (scramble 8)) $
 sometimesBy 0.1 (stut 2 1 0.5) $
 stack [
-midinote "[36*8?]" # velocity 1,
-midinote "[~ 38]" # velocity 1,
-sometimesBy 0.05 (fast 2)  $ midinote "[40*8]" # velocity 1
+midinote "[36*8?]",
+midinote "[~ 38]",
+sometimesBy 0.05 (fast 2)  $ midinote "[40*8]"
 ]
 
-m1 $ fast 2 $ stack [
-midinote "[36*2]" # velocity 1,
-midinote "[40*4]" # velocity 1,
-midinote "[~ 38]/2" # velocity 1
+-- main groove
+m1 $ stack [
+sometimes (fast 2) $ sometimesBy 0.2 (fast 2) $ midinote "[36]", --bd
+whenmod 8 7 (fast 2) $ midinote "[40]*4", -- hh
+midinote "[~ 38]/2", -- snare
+sometimes (fast 2) $ sometimes (slow 2) $ sometimes (fast 2) $ midinote "[45]*4" -- bassline triggers sometimes (fast 2) $ midinote "[~ 41?]/2", -- weird melody midinote "[43]"
 ]
+
+m1 $ silence
+
+
+m1 $ whenmod 8 7 (slow 3) $ stack [
+midinote "[36*8?]",
+often (fast 2) $ often (fast 2)$ midinote "[40*2]",
+midinote "[~ ~ ~ ~ 38 ~ ~ ~]",
+midinote "[41]/8"
+]
+
+m1 $ midinote "[36]*2"
 
 m1 $ silence
