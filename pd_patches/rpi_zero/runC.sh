@@ -27,8 +27,8 @@ sudo killall ttymidi
 sudo killall pd
 
 # full path to the pure data file
-patch='/home/pi/diy_modular_synthesizer/pd_patches/rpi_zero/rpi.pd' # where is the pd file?
-options='-noverbose -alsamidi -rt -nogui' # pure data command line options
+patch='/home/pi/diy_modular_synthesizer/pd_patches/rpi_zero/makenotes.pd' # where is the pd file?
+options='-nogui -noverbose -alsamidi -rt' # pure data command line options
 
 # which audio devices to use? (use `pd -nogui -listdev` to see what's available)
 # TODO: arrive at these numbers programmatically the way we do with midi devices below
